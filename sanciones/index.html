@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Sanciones LFPIORPI 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:    #0D2137;
+    --navy2:   #1C3557;
+    --red:     #B91C1C;
+    --darkred: #7F1D1D;
+    --amber:   #D97706;
+    --green:   #166534;
+    --teal:    #0E7490;
+    --cream:   #FDF8F0;
+    --smoke:   #F1EDE6;
+    --muted:   rgba(255,255,255,0.45);
+    --border:  rgba(255,255,255,0.1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--navy);
+    color: var(--cream);
+    min-height: 100vh;
+    padding: 0 16px 60px;
+  }
+  body::before {
+    content:''; position:fixed; inset:0;
+    background-image:
+      repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(255,255,255,.025) 39px,rgba(255,255,255,.025) 40px),
+      repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(255,255,255,.025) 39px,rgba(255,255,255,.025) 40px);
+    pointer-events:none; z-index:0;
+  }
+  .wrap { max-width:900px; margin:0 auto; position:relative; z-index:1; }
+
+  /* ── HEADER ── */
+  header {
+    padding:28px 0 20px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:32px;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+  .header-left h1 {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(26px,4vw,40px); letter-spacing:3px;
+  }
+  .header-left h1 span { color:var(--amber); }
+  .header-left p {
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px; letter-spacing:2px; color:var(--muted);
+    margin-top:4px;
+  }
+  .home-btn {
+    padding:8px 18px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px; letter-spacing:1px;
+    color:var(--muted);
+    text-decoration:none;
+    transition:all .2s;
+  }
+  .home-btn:hover { border-color:var(--amber); color:var(--amber); }
+
+  /* ── TABS ── */
+  .tabs { display:flex; gap:4px; margin-bottom:28px; }
+  .tab {
+    padding:10px 24px;
+    border:1px solid var(--border);
+    border-radius:6px 6px 0 0;
+    font-family:'Bebas Neue',sans-serif;
+    font-size:15px; letter-spacing:2px;
+    color:var(--muted);
+    cursor:pointer;
+    background:transparent;
+    transition:all .2s;
+  }
+  .tab.active { background:rgba(255,255,255,.07); color:var(--cream); border-color:rgba(255,255,255,.2); }
+  .tab:hover:not(.active) { color:var(--cream); }
+  .tab-content { display:none; }
+  .tab-content.active { display:block; }
+
+  /* ── FORM ── */
+  .form-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:20px;
+    margin-bottom:24px;
+  }
+  @media(max-width:600px){ .form-grid{ grid-template-columns:1fr; } }
+
+  .field { display:flex; flex-direction:column; gap:8px; }
+  .field.full { grid-column:1/-1; }
+
+  label {
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px; letter-spacing:2px;
+    color:var(--muted); text-transform:uppercase;
+  }
+
+  select, input[type=number] {
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:6px;
+    color:var(--cream);
+    font-family:'IBM Plex Sans',sans-serif;
+    font-size:13px;
+    padding:10px 14px;
+    width:100%;
+    transition:border-color .2s;
+    -webkit-appearance:none;
+  }
+  select { cursor:pointer; }
+  select:focus, input:focus { outline:none; border-color:var(--amber); }
+  select option { background:#1C3557; color:var(--cream); }
+  optgroup { background:#0D2137; color:var(--amber); font-style:normal; font-weight:700; }
+
+  .radio-group { display:flex; gap:10px; flex-wrap:wrap; }
+  .radio-opt {
+    display:flex; align-items:center; gap:8px;
+    padding:9px 16px;
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:6px;
+    cursor:pointer;
+    transition:all .2s;
+    font-size:13px;
+  }
+  .radio-opt:hover { border-color:rgba(255,255,255,.3); }
+  .radio-opt.selected { border-color:var(--amber); background:rgba(217,119,6,.12); color:var(--amber); }
+  .radio-opt input { display:none; }
+
+  /* ── BOTON CALCULAR ── */
+  .btn-calc {
+    width:100%;
+    padding:14px;
+    background:var(--red);
+    border:none; border-radius:8px;
+    font-family:'Bebas Neue',sans-serif;
+    font-size:20px; letter-spacing:3px;
+    color:var(--cream); cursor:pointer;
+    transition:all .2s;
+    margin-bottom:28px;
+  }
+  .btn-calc:hover { background:#991B1B; transform:translateY(-1px); box-shadow:0 6px 24px rgba(185,28,28,.4); }
+
+  /* ── RESULTADO ── */
+  #resultado { display:none; }
+  #resultado.visible { display:block; }
+
+  .result-header {
+    display:flex; align-items:center; justify-content:space-between;
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--border);
+    border-radius:10px 10px 0 0;
+    padding:16px 20px;
+    border-bottom:none;
+  }
+  .result-nivel {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:22px; letter-spacing:2px;
+  }
+  .result-art {
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px; letter-spacing:2px; color:var(--muted);
+  }
+  .nivel-badge {
+    padding:4px 14px;
+    border-radius:20px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px; font-weight:600; letter-spacing:1px;
+  }
+  .nivel-1 { background:rgba(217,119,6,.25); color:#FCD34D; border:1px solid rgba(217,119,6,.4); }
+  .nivel-2 { background:rgba(185,28,28,.25); color:#FCA5A5; border:1px solid rgba(185,28,28,.4); }
+  .nivel-3 { background:rgba(127,29,29,.4);  color:#FCA5A5; border:1px solid rgba(127,29,29,.6); }
+
+  .result-cards {
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:rgba(255,255,255,.06);
+    border:1px solid var(--border);
+    border-top:none;
+    border-radius:0 0 10px 10px;
+    overflow:hidden;
+    margin-bottom:20px;
+  }
+  @media(max-width:600px){ .result-cards{ grid-template-columns:1fr; } }
+
+  .res-card {
+    padding:20px;
+    background:rgba(255,255,255,.03);
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .res-card-label {
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px; letter-spacing:2px; color:var(--muted);
+    text-transform:uppercase;
+  }
+  .res-card-main {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(18px,2.5vw,26px); letter-spacing:1px;
+    line-height:1.1;
+  }
+  .res-card-sub {
+    font-size:11px; color:var(--muted); margin-top:2px;
+  }
+  .color-amber { color:var(--amber); }
+  .color-red   { color:#FCA5A5; }
+  .color-green { color:#86EFAC; }
+
+  .art55-box {
+    border:1px solid rgba(14,116,144,.4);
+    border-radius:8px;
+    padding:16px 20px;
+    background:rgba(14,116,144,.08);
+    margin-bottom:20px;
+    display:flex; gap:14px; align-items:flex-start;
+  }
+  .art55-icon { font-size:22px; flex-shrink:0; }
+  .art55-title {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:16px; letter-spacing:1px; color:#67E8F9;
+    margin-bottom:4px;
+  }
+  .art55-text { font-size:13px; line-height:1.6; color:rgba(255,255,255,.7); }
+
+  .nota-n3 {
+    border:1px solid rgba(127,29,29,.4);
+    border-radius:8px;
+    padding:14px 18px;
+    background:rgba(127,29,29,.1);
+    font-size:12px; line-height:1.6; color:rgba(255,255,255,.65);
+    margin-bottom:20px;
+  }
+
+  .btn-reset {
+    width:100%; padding:12px;
+    background:transparent;
+    border:1px solid var(--border);
+    border-radius:8px;
+    font-family:'Bebas Neue',sans-serif;
+    font-size:16px; letter-spacing:2px;
+    color:var(--muted); cursor:pointer;
+    transition:all .2s;
+  }
+  .btn-reset:hover { border-color:var(--amber); color:var(--amber); }
+
+  /* ── UMBRALES TABLE ── */
+  .uma-nota {
+    background:rgba(217,119,6,.1);
+    border:1px solid rgba(217,119,6,.3);
+    border-radius:8px;
+    padding:12px 18px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px; color:var(--amber);
+    margin-bottom:20px;
+  }
+
+  .umb-section { margin-bottom:28px; }
+  .umb-title {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:16px; letter-spacing:2px; color:var(--amber);
+    margin-bottom:12px; padding-bottom:8px;
+    border-bottom:1px solid rgba(255,255,255,.07);
+  }
+
+  table.umb {
+    width:100%; border-collapse:collapse; font-size:12px;
+  }
+  table.umb th {
+    font-family:'IBM Plex Mono',monospace;
+    font-size:9px; letter-spacing:2px; color:var(--muted);
+    text-align:left; padding:8px 12px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    text-transform:uppercase; white-space:nowrap;
+  }
+  table.umb td {
+    padding:10px 12px;
+    border-bottom:1px solid rgba(255,255,255,.04);
+    color:rgba(255,255,255,.75); vertical-align:middle;
+    line-height:1.4;
+  }
+  table.umb tr:last-child td { border-bottom:none; }
+  table.umb tr:hover td { background:rgba(255,255,255,.03); }
+  table.umb td:first-child {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:16px; letter-spacing:1px; color:var(--amber);
+    white-space:nowrap;
+  }
+  .pesos { font-family:'IBM Plex Mono',monospace; font-size:11px; color:#86EFAC; }
+  .prohib { color:#FCA5A5; font-weight:600; font-size:11px; }
+  .na { color:rgba(255,255,255,.25); font-size:11px; }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top:40px; padding-top:20px;
+    border-top:1px solid rgba(255,255,255,.07);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px; letter-spacing:1px;
+    color:rgba(255,255,255,.2); text-align:center;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="header-left">
+    <h1>CALCULADORA <span>LFPIORPI</span></h1>
+    <p>ARTS. 53 Y 54 LFPIORPI · Ley DOF 16-07-2025 · Reglamento DOF 27-03-2026 · ACUERDO 115/2026 DOF 07-08-2026 · UMA 2026 = $117.31/DÍA · INEGI, VIGENTE DESDE EL 01-02-2026</p>
+  </div>
+  <a class="home-btn" href="../guia/">← INICIO</a>
+</header>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" onclick="showTab('calc')">🧮  CALCULADORA</button>
+  <button class="tab" onclick="showTab('umb')">📋  UMBRALES ART. 17</button>
+</div>
+
+<!-- ══ TAB: CALCULADORA ══════════════════════════════════════════════════════ -->
+<div id="tab-calc" class="tab-content active">
+
+  <div class="form-grid">
+
+    <!-- Obligación incumplida -->
+    <div class="field full">
+      <label>Obligación incumplida (Art. 18 / Art. 32)</label>
+      <select id="selObligacion" onchange="onObligChange()">
+        <option value="">— Selecciona la obligación —</option>
+
+        <optgroup label="── IDENTIFICACIÓN Y EXPEDIENTE (Art. 18 Fracc. I a III) ──">
+          <option value="1|id_cliente">No identifiqué ni verifiqué la identidad del cliente antes de la operación (Fracc. I)</option>
+          <option value="1|exp_incompleto">El expediente del cliente está incompleto o no se integró conforme al Art. 18</option>
+          <option value="1|sin_actividad">No solicité la actividad u ocupación al establecer una Relación de negocios (Fracc. II)</option>
+          <option value="1|bc_cliente">No identifiqué al Beneficiario Controlador de mi Cliente, o no recabé la declaración de la persona física (Fracc. III)</option>
+          <option value="1|no_conservo">No conservé la información durante 10 años, o no la conservé en el domicilio registrado (Fracc. IV)</option>
+          <option value="1|sin_padron">No mantuve actualizada mi alta y registro en el Padrón (Fracc. IV Bis)</option>
+          <option value="1|sin_facilidades">No brindé facilidades para la visita de verificación (Fracc. V)</option>
+        </optgroup>
+
+        <optgroup label="── SOCIEDADES MERCANTILES · CAPÍTULO IV BIS (Arts. 33, 33 Bis, 33 Ter) ──">
+          <option value="5|fp_instrumento">Fedatario: no identifiqué la forma de pago en el instrumento desde 8,025 UMA (Art. 33)</option>
+          <option value="5|bc_no_registro">Sociedad mercantil: no atendí el requerimiento para determinar a mi Beneficiario Controlador ni conservé el soporte (Art. 33 Bis)</option>
+          <option value="5|bc_no_actualiz">Sociedad mercantil: no registré la información del BC en el sistema de la Secretaría de Economía (Art. 33 Ter)</option>
+        </optgroup>
+
+        <optgroup label="── AVISOS (Art. 18 Fracc. VI) ──">
+          <option value="8|aviso_tardio">Presenté el aviso TARDE pero dentro de los 30 días siguientes</option>
+          <option value="4|aviso_errores">Presenté el aviso con errores u omisiones de forma</option>
+          <option value="6|omision_aviso">No presenté el aviso O lo presenté con más de 30 días de retraso</option>
+        </optgroup>
+
+        <optgroup label="── REPRESENTANTE ENCARGADA DE CUMPLIMIENTO (Art. 20) ──">
+          <option value="1|sin_representante">No designé persona Representante Encargada del Cumplimiento, o la designación no fue aceptada (Art. 20)</option>
+        </optgroup>
+
+        <optgroup label="── OBLIGACIONES DIFERIDAS · aún no sancionables (Art. 18 Fracc. VII a XI) ──">
+          <option value="0|dif_ebr">Evaluación con enfoque basado en Riesgos (Fracc. VII) — exigible el 01-03-2027</option>
+          <option value="0|dif_manual">Manual de Políticas Internas (Fracc. VIII) — exigible el 01-03-2027</option>
+          <option value="0|dif_capacitacion">Selección de personal y capacitación anual (Fracc. IX) — primer periodo 2027</option>
+          <option value="0|dif_mecanismos">Mecanismos automatizados de monitoreo (Fracc. X) — exigible el 01-06-2027</option>
+          <option value="0|dif_auditoria">Auditoría y dictamen de efectividad (Fracc. XI) — primer ejercicio auditable 2028</option>
+        </optgroup>
+
+        <optgroup label="── REQUERIMIENTOS DE LA SHCP (Art. 53 Fracc. I) ──">
+          <option value="1|req_shcp">Me negué o no atendí un requerimiento formal de la SHCP</option>
+        </optgroup>
+
+        <optgroup label="── PROHIBICIONES DE EFECTIVO (Art. 32) ──">
+          <option value="7|efectivo_viii">Recibí efectivo en venta de vehículos por encima de 3,210 UMA (Fracc. VIII)</option>
+          <option value="7|efectivo_v">Recibí efectivo en operación inmobiliaria por encima de 8,025 UMA (Fracc. V)</option>
+          <option value="7|efectivo_otros">Realicé operación prohibida con efectivo, metales o monedas (Art. 32)</option>
+        </optgroup>
+
+      </select>
+    </div>
+
+    <!-- Número de infracciones -->
+    <div class="field">
+      <label>Número de infracciones del mismo tipo</label>
+      <input type="number" id="numInfracciones" value="1" min="1" max="999">
+    </div>
+
+    <!-- Valor de la operación -->
+    <div class="field">
+      <label>Valor total de la operación ($MXN) — Nivel 3 solamente</label>
+      <input type="number" id="valorOp" value="0" min="0" placeholder="0">
+    </div>
+
+    <!-- Art. 55 -->
+    <div class="field full">
+      <label>¿Se regulariza espontáneamente ANTES de que la SHCP inicie verificación?</label>
+      <div class="radio-group" id="art55Group">
+        <label class="radio-opt" onclick="selectRadio('art55','no')">
+          <input type="radio" name="art55" value="no">
+          <span>No — la SHCP ya detectó / proceso en curso</span>
+        </label>
+        <label class="radio-opt" onclick="selectRadio('art55','primera')">
+          <input type="radio" name="art55" value="primera">
+          <span>Sí — 1ª ocasión espontánea (100% condonado)</span>
+        </label>
+        <label class="radio-opt" onclick="selectRadio('art55','subsecuente')">
+          <input type="radio" name="art55" value="subsecuente">
+          <span>Sí — 2ª ocasión o más (50% de reducción)</span>
+        </label>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="btn-calc" onclick="calcular()">CALCULAR SANCIÓN</button>
+
+  <!-- RESULTADO -->
+  <div id="resultado">
+
+    <div class="result-header">
+      <div>
+        <div class="result-nivel" id="resNivelTexto"></div>
+        <div class="result-art" id="resArtRef"></div>
+      </div>
+      <span class="nivel-badge" id="resNivelBadge"></span>
+    </div>
+
+    <div class="result-cards">
+      <div class="res-card">
+        <div class="res-card-label">Rango en UMA (por infracción)</div>
+        <div class="res-card-main color-amber" id="resUmaRango"></div>
+        <div class="res-card-sub" id="resUmaSub"></div>
+      </div>
+      <div class="res-card">
+        <div class="res-card-label">Multa total sin Art. 55</div>
+        <div class="res-card-main color-red" id="resPesosSinArt55"></div>
+        <div class="res-card-sub" id="resPesosSinSub"></div>
+      </div>
+      <div class="res-card">
+        <div class="res-card-label">Multa efectiva con Art. 55</div>
+        <div class="res-card-main color-green" id="resPesosConArt55"></div>
+        <div class="res-card-sub" id="resPesosConSub"></div>
+      </div>
+    </div>
+
+    <div class="nota-n3" id="notaN3" style="display:none"></div>
+
+    <div class="art55-box" id="art55Box">
+      <div class="art55-icon">⚖️</div>
+      <div>
+        <div class="art55-title" id="art55Title"></div>
+        <div class="art55-text" id="art55Text"></div>
+      </div>
+    </div>
+
+    <button class="btn-reset" onclick="resetForm()">← NUEVA CONSULTA</button>
+
+  </div><!-- /resultado -->
+
+</div><!-- /tab-calc -->
+
+<!-- ══ TAB: UMBRALES ═════════════════════════════════════════════════════════ -->
+<div id="tab-umb" class="tab-content">
+
+  <div class="uma-nota">
+    ★  UMA 2026 = $117.31 / día · INEGI, vigente desde el 1 de febrero de 2026. Los montos en pesos son referenciales y deben recalcularse con la UMA vigente al día del acto u operación.
+  </div>
+
+  <div class="umb-section">
+    <div class="umb-title">ACTIVIDADES VULNERABLES CON UMBRALES EXPRESOS — Art. 17 LFPIORPI</div>
+    <table class="umb">
+      <thead>
+        <tr>
+          <th>Fracc.</th>
+          <th>Actividad vulnerable</th>
+          <th>Identificación</th>
+          <th>Aviso</th>
+          <th>Equiv. aviso $MXN</th>
+          <th>Prohib. efectivo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>I</td>
+          <td>Juegos y sorteos con premios en efectivo</td>
+          <td>≥ 325 UMA/op</td>
+          <td>≥ 325 UMA/op</td>
+          <td class="pesos">$38,125.75</td>
+          <td class="prohib">≥ 325 UMA</td>
+        </tr>
+        <tr>
+          <td>II</td>
+          <td>Tarjetas de crédito/servicios (gasto mensual acumulado)</td>
+          <td>≥ 805 UMA/mes</td>
+          <td>≥ 1,285 UMA/mes</td>
+          <td class="pesos">$150,743.35</td>
+          <td class="na">N/A</td>
+        </tr>
+        <tr>
+          <td>II</td>
+          <td>Tarjetas prepagadas y monederos electrónicos (por operación)</td>
+          <td>≥ 645 UMA/op</td>
+          <td>≥ 645 UMA/op</td>
+          <td class="pesos">$75,664.95</td>
+          <td class="na">N/A</td>
+        </tr>
+        <tr>
+          <td>III</td>
+          <td>Transmisión de fondos (cuentas de terceros / giros)</td>
+          <td>≥ 645 UMA/op</td>
+          <td>≥ 645 UMA/op</td>
+          <td class="pesos">$75,664.95</td>
+          <td class="na">N/A</td>
+        </tr>
+        <tr>
+          <td>IV</td>
+          <td>Mutuo, garantía, créditos y préstamos (no entidades financieras)</td>
+          <td>Toda op. habitual</td>
+          <td>≥ 1,605 UMA</td>
+          <td class="pesos">$188,282.55</td>
+          <td class="na">N/A</td>
+        </tr>
+        <tr>
+          <td>V</td>
+          <td>Construcción, desarrollo e intermediación inmobiliaria</td>
+          <td>Toda op. habitual</td>
+          <td>≥ 8,025 UMA</td>
+          <td class="pesos">$941,412.75</td>
+          <td class="prohib">≥ 8,025 UMA</td>
+        </tr>
+        <tr>
+          <td>V Bis</td>
+          <td>Recepción de recursos para Desarrollo Inmobiliario (NUEVA 2025)</td>
+          <td>Toda recepción</td>
+          <td>≥ 8,025 UMA</td>
+          <td class="pesos">$941,412.75</td>
+          <td class="prohib">≥ 8,025 UMA</td>
+        </tr>
+        <tr>
+          <td>VI</td>
+          <td>Comercialización o distribución habitual de metales y piedras preciosas</td>
+          <td>≥ 805 UMA/op</td>
+          <td>≥ 1,605 UMA/op</td>
+          <td class="pesos">$188,282.55</td>
+          <td class="prohib">≥ 805 UMA</td>
+        </tr>
+        <tr>
+          <td>VII</td>
+          <td>Obras de arte, antigüedades y subasta de bienes</td>
+          <td>≥ 4,815 UMA/op</td>
+          <td>≥ 4,815 UMA/op</td>
+          <td class="pesos">$565,348.65</td>
+          <td class="na">N/A</td>
+        </tr>
+        <tr>
+          <td>VIII</td>
+          <td>Vehículos nuevos o usados (aéreos, marítimos, terrestres)</td>
+          <td>≥ 3,210 UMA</td>
+          <td>≥ 6,420 UMA</td>
+          <td class="pesos">$753,130.20</td>
+          <td class="prohib">≥ 3,210 UMA</td>
+        </tr>
+        <tr>
+          <td>IX</td>
+          <td>Blindaje de vehículos o bienes</td>
+          <td>≥ 2,410 UMA/op</td>
+          <td>≥ 2,410 UMA/op</td>
+          <td class="pesos">$282,717.10</td>
+          <td class="na">N/A</td>
+        </tr>
+        <tr>
+          <td>X</td>
+          <td>Traslado o custodia de dinero o valores</td>
+          <td>≥ 3,210 UMA/op</td>
+          <td>≥ 3,210 UMA/op</td>
+          <td class="pesos">$376,565.10</td>
+          <td class="na">N/A</td>
+        </tr>
+        <tr>
+          <td>XI</td>
+          <td>Prestación de servicios profesionales (notarios, contadores, abogados — supuestos específicos)</td>
+          <td>≥ 3,210 UMA/op</td>
+          <td>≥ 3,210 UMA/op</td>
+          <td class="pesos">$376,565.10</td>
+          <td class="na">N/A</td>
+        </tr>
+        <tr>
+          <td>XII</td>
+          <td>Prestación de servicios de fe pública (fedatarios)</td>
+          <td>≥ 3,210 UMA/op</td>
+          <td>≥ 3,210 UMA/op</td>
+          <td class="pesos">$376,565.10</td>
+          <td class="na">N/A</td>
+        </tr>
+        <tr>
+          <td>XIII</td>
+          <td>Recepción de donativos por organizaciones sin fines de lucro</td>
+          <td>≥ 3,210 UMA/op</td>
+          <td>≥ 3,210 UMA/op</td>
+          <td class="pesos">$376,565.10</td>
+          <td class="na">N/A</td>
+        </tr>
+        <tr>
+          <td>XIV</td>
+          <td>Prestación de servicios de comercio exterior (agentes aduanales)</td>
+          <td>Toda op. habitual</td>
+          <td>≥ 3,210 UMA/op</td>
+          <td class="pesos">$376,565.10</td>
+          <td class="na">N/A</td>
+        </tr>
+        <tr>
+          <td>XV</td>
+          <td>Arrendamiento de inmuebles (renta mensual)</td>
+          <td>≥ 1,605 UMA/mes</td>
+          <td>≥ 3,210 UMA/mes</td>
+          <td class="pesos">$376,565.10</td>
+          <td class="na">N/A</td>
+        </tr>
+        <tr>
+          <td>XVI</td>
+          <td>Préstamos o créditos sobre alhajas, metales y piedras preciosas (casas de empeño)</td>
+          <td>≥ 325 UMA/op</td>
+          <td>≥ 645 UMA/op</td>
+          <td class="pesos">$75,664.95</td>
+          <td class="na">N/A</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="umb-section">
+    <div class="umb-title">NIVELES DE SANCIÓN — Art. 54 LFPIORPI</div>
+    <table class="umb">
+      <thead>
+        <tr><th>Nivel</th><th>Aplica a (Art. 53)</th><th>Mínimo UMA</th><th>Máximo UMA</th><th>Mínimo $MXN</th><th>Máximo $MXN</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Fracc. I, II, III y IV — Requerimientos de la Secretaría, incumplimiento de <b>cualquier</b> obligación del Art. 18, Avisos extemporáneos dentro de 30 días y Avisos sin los requisitos del Art. 24</td>
+          <td>200</td><td>2,000</td>
+          <td class="pesos">$23,462.00</td><td class="pesos">$234,620.00</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Fracc. V — Arts. 33, 33 Bis y 33 Ter: forma de pago en instrumentos de fe pública y Beneficiario Controlador de las sociedades mercantiles</td>
+          <td>2,000</td><td>10,000</td>
+          <td class="pesos">$234,620.00</td><td class="pesos">$1,173,100.00</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Fracc. VI y VII — <b>Omisión</b> de Avisos y operaciones prohibidas por el Art. 32</td>
+          <td>10,000</td><td>65,000</td>
+          <td class="pesos">$1,173,100.00</td><td class="prohib">$7,625,150.00 ó 10–100% del valor de la operación (lo que resulte MAYOR)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- /tab-umb -->
+
+<footer>
+  LFPIORPI Ley DOF 16-07-2025 · Reglamento DOF 27-03-2026 · ACUERDO 115/2026 DOF 07-08-2026 · Reglamento DOF 27-03-2026 · ACUERDO 115/2026 DOF 07-08-2026 · Arts. 17, 18, 20, 32, 33, 36, 53 a 62 · UMA 2026 = $117.31/día desde el 01-02-2026 · Herramienta de referencia — no sustituye asesoría jurídica · v2.0 · 11-08-2026
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+const UMA = 117.31;
+const NIVELES = {
+  1: { min:200,   max:2000,  label:'Nivel 1',  art:'Art. 53 Fracc. I–IV · Art. 54 Fracc. I' },
+  2: { min:2000,  max:10000, label:'Nivel 2',  art:'Art. 53 Fracc. V · Art. 54 Fracc. II' },
+  0: { min:0,     max:0,     label:'No sancionable hoy', art:'Obligación diferida · Transitorio Tercero del Decreto y transitorios del ACUERDO 115/2026' },
+  3: { min:10000, max:65000, label:'Nivel 3',  art:'Art. 53 Fracc. VI–VII · Art. 54 Fracc. III' },
+  4: { min:200,   max:2000,  label:'Nivel 1',  art:'Art. 53 Fracc. IV · Art. 54 Fracc. I' },
+  5: { min:2000,  max:10000, label:'Nivel 2',  art:'Art. 53 Fracc. V · Art. 54 Fracc. II — Arts. 33, 33 Bis y 33 Ter' },
+  6: { min:10000, max:65000, label:'Nivel 3',  art:'Art. 53 Fracc. VI · Art. 54 Fracc. III — la extemporaneidad de más de 30 días se remite a la sanción de omisión (remisión defectuosa: el texto envía al Art. 54 Fracc. II)' },
+  7: { min:10000, max:65000, label:'Nivel 3',  art:'Art. 53 Fracc. VII · Art. 54 Fracc. III' },
+  8: { min:200,   max:2000,  label:'Nivel 1',  art:'Art. 53 Fracc. III · Art. 54 Fracc. I — extemporaneidad dentro de 30 días' },
+};
+
+let art55Val = 'no';
+
+function selectRadio(group, val) {
+  art55Val = val;
+  document.querySelectorAll('.radio-opt').forEach(el => el.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+}
+
+function showTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+function onObligChange() {
+  const val = document.getElementById('selObligacion').value;
+  const nivel = val ? parseInt(val.split('|')[0]) : 0;
+  const valOpField = document.getElementById('valorOp').closest('.field');
+  valOpField.style.opacity = (nivel === 3 || nivel === 6 || nivel === 7) ? '1' : '0.4';
+}
+
+function fmt(n) {
+  return '$' + n.toLocaleString('es-MX', {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+
+function calcular() {
+  const selVal = document.getElementById('selObligacion').value;
+  if (!selVal) { alert('Selecciona la obligación incumplida.'); return; }
+
+  const nivelKey  = parseInt(selVal.split('|')[0]);
+
+  // Obligaciones diferidas: no pueden fundar una multa hoy.
+  if (nivelKey === 0) {
+    alert('Esta obligación todavía no es exigible y no puede fundar una multa hoy.\n\n'
+        + 'Las fracciones VII a XI del artículo 18 se difirieron por el Transitorio Tercero del Decreto de reforma a la Ley, '
+        + 'y las Reglas las fijaron entre el 1 de marzo de 2027 y el ejercicio 2028.\n\n'
+        + 'Consulta la pestaña de Obligaciones del Art. 18 para el calendario completo.');
+    return;
+  }
+  const n         = parseInt(document.getElementById('numInfracciones').value) || 1;
+  const valorOp   = parseFloat(document.getElementById('valorOp').value) || 0;
+  const cfg       = NIVELES[nivelKey];
+  const isN3      = (nivelKey === 3 || nivelKey === 6 || nivelKey === 7);
+
+  // Multa base por infracción
+  let minBase = cfg.min * UMA;
+  let maxBase = cfg.max * UMA;
+
+  // Nivel 3: comparar con % del valor de la operación
+  if (isN3 && valorOp > 0) {
+    minBase = Math.max(minBase, valorOp * 0.10);
+    maxBase = Math.max(maxBase, valorOp * 1.00);
+  }
+
+  // Total por número de infracciones
+  let minTotal = minBase * n;
+  let maxTotal = maxBase * n;
+
+  // Art. 55
+  let minEfectivo = minTotal;
+  let maxEfectivo = maxTotal;
+  let art55Msg = '';
+
+  if (art55Val === 'primera') {
+    minEfectivo = 0; maxEfectivo = 0;
+    art55Msg = '1ª OCASIÓN ESPONTÁNEA — Art. 55 LFPIORPI';
+  } else if (art55Val === 'subsecuente') {
+    minEfectivo = minTotal * 0.5;
+    maxEfectivo = maxTotal * 0.5;
+    art55Msg = 'SUBSECUENTE ESPONTÁNEA — Art. 55 LFPIORPI';
+  }
+
+  // Mostrar resultado
+  const res = document.getElementById('resultado');
+
+  document.getElementById('resNivelTexto').textContent = cfg.label + ' — ' + document.getElementById('selObligacion').selectedOptions[0].text.slice(0,60) + (document.getElementById('selObligacion').selectedOptions[0].text.length > 60 ? '…' : '');
+  document.getElementById('resArtRef').textContent = cfg.art;
+
+  const badge = document.getElementById('resNivelBadge');
+  badge.textContent = cfg.label;
+  badge.className = 'nivel-badge nivel-' + (nivelKey >= 6 ? 3 : nivelKey >= 5 ? 2 : nivelKey >= 2 && nivelKey <= 2 ? 2 : nivelKey === 1 || nivelKey === 4 ? 1 : 3);
+  badge.className = 'nivel-badge nivel-' + (nivelKey === 1 || nivelKey === 4 ? '1' : nivelKey === 2 || nivelKey === 5 ? '2' : '3');
+
+  document.getElementById('resUmaRango').textContent = cfg.min.toLocaleString('es-MX') + ' – ' + cfg.max.toLocaleString('es-MX') + ' UMA';
+  document.getElementById('resUmaSub').textContent   = 'por infracción · ' + n + (n===1?' infracción':' infracciones') + ' ingresadas';
+
+  document.getElementById('resPesosSinArt55').textContent = fmt(minTotal) + ' – ' + fmt(maxTotal);
+  document.getElementById('resPesosSinSub').textContent   = 'sin Art. 55 · ' + (isN3 && valorOp > 0 ? 'incluye comparativo % op.' : 'solo UMA');
+
+  if (art55Val === 'primera') {
+    document.getElementById('resPesosConArt55').textContent = '$0.00';
+    document.getElementById('resPesosConSub').textContent   = 'Abstención total — 1ª vez espontánea y previa, con reconocimiento expreso';
+  } else if (art55Val === 'subsecuente') {
+    document.getElementById('resPesosConArt55').textContent = fmt(minEfectivo) + ' – ' + fmt(maxEfectivo);
+    document.getElementById('resPesosConSub').textContent   = 'Reducción de HASTA 50% — subsecuente espontánea y previa';
+  } else {
+    document.getElementById('resPesosConArt55').textContent = fmt(minTotal) + ' – ' + fmt(maxTotal);
+    document.getElementById('resPesosConSub').textContent   = 'Art. 55 no aplicado';
+  }
+
+  // Nota N3
+  const notaEl = document.getElementById('notaN3');
+  if (isN3 && valorOp > 0) {
+    notaEl.style.display = 'block';
+    notaEl.innerHTML = '⚠️  <strong>Nivel 3:</strong> La multa es la que resulte <strong>MAYOR</strong> entre el rango en UMA ('
+      + fmt(cfg.min * UMA) + ' – ' + fmt(cfg.max * UMA) + ') y el 10%–100% del valor de la operación ('
+      + fmt(valorOp * 0.10) + ' – ' + fmt(valorOp) + '). Se aplicó el mayor de los dos.';
+  } else { notaEl.style.display = 'none'; }
+
+  // Art. 55 box
+  const art55Title = document.getElementById('art55Title');
+  const art55Text  = document.getElementById('art55Text');
+  if (art55Val === 'primera') {
+    art55Title.textContent = art55Msg;
+    art55Text.textContent  = 'Al regularizarse espontáneamente antes de que la SHCP inicie verificación, la primera ocasión da derecho a condonación total de la multa. La infracción debe subsanarse completamente.';
+  } else if (art55Val === 'subsecuente') {
+    art55Title.textContent = art55Msg;
+    art55Text.textContent  = 'Para la segunda ocasión o subsecuentes, el Art. 55 permite una reducción del 50% sobre la multa calculada, siempre que la regularización sea espontánea y previa al inicio de la verificación.';
+  } else {
+    art55Title.textContent = 'Sin beneficio Art. 55';
+    art55Text.textContent  = 'La SHCP ya inició el proceso de verificación o se optó por no regularizarse espontáneamente. Se aplica el monto completo calculado.';
+  }
+
+  res.classList.add('visible');
+  res.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function resetForm() {
+  document.getElementById('selObligacion').value = '';
+  document.getElementById('numInfracciones').value = 1;
+  document.getElementById('valorOp').value = 0;
+  art55Val = 'no';
+  document.querySelectorAll('.radio-opt').forEach(el => el.classList.remove('selected'));
+  document.getElementById('resultado').classList.remove('visible');
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+// Inicializar primer radio seleccionado visualmente
+document.querySelector('.radio-opt').classList.add('selected');
+</script>
+</body>
+</html>
