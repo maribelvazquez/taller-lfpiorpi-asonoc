@@ -4,7 +4,7 @@ Material de consulta gratuito sobre las nuevas Reglas de Carácter General de la
 para la Prevención e Identificación de Operaciones con Recursos de Procedencia Ilícita,
 publicadas en el Diario Oficial de la Federación el viernes 7 de agosto de 2026.
 
-Publicado por **GMC360 · 360Educa · ASONOC**.
+Publicado por **GMC360 · 360Educa · ASONOC · LEXQUO**.
 
 ## Qué contiene
 
@@ -38,15 +38,9 @@ No requiere build. Basta servir la carpeta como sitio estático.
 
 Al modificar cualquier cifra o fecha hay que revisar también la nota de método del pie de página.
 
-## Nota de método
+## Nota
 
-Los artículos 1 a 26 del ACUERDO 115/2026 están cotejados contra el texto publicado en el
-Diario Oficial de la Federación. Los artículos 27 a 51, los doce transitorios y los anexos
-se citan del proyecto del 23 de julio de 2026 y su cotejo está en proceso; el sitio lo indica
-expresamente donde corresponde.
-
-Este material es de apoyo académico y no constituye asesoría legal ni dictamen para un caso
-concreto.
+Material de apoyo académico; no constituye asesoría legal ni dictamen para un caso concreto.
 
 ---
 
