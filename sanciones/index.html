@@ -4,322 +4,187 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calculadora de Sanciones LFPIORPI 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy:    #0D2137;
-    --navy2:   #1C3557;
-    --red:     #B91C1C;
-    --darkred: #7F1D1D;
-    --amber:   #D97706;
-    --green:   #166534;
-    --teal:    #0E7490;
-    --cream:   #FDF8F0;
-    --smoke:   #F1EDE6;
-    --muted:   rgba(255,255,255,0.45);
-    --border:  rgba(255,255,255,0.1);
+  :root{
+    --navy:#12224A; --navy2:#1E2761; --navy3:#1B3061;
+    --ice:#CADCFC; --amber:#F2A541; --amberdark:#B97514;
+    --red:#C1443C; --green:#2E7D5B;
+    --gray:#5A6472; --light:#F4F6FA; --ink:#16202E; --line:#E2E7F0;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'IBM Plex Sans', sans-serif;
-    background: var(--navy);
-    color: var(--cream);
-    min-height: 100vh;
-    padding: 0 16px 60px;
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:Calibri,"Segoe UI",Arial,sans-serif;
+    background:var(--light); color:var(--ink);
+    min-height:100vh; padding-bottom:60px; line-height:1.5;
   }
-  body::before {
-    content:''; position:fixed; inset:0;
-    background-image:
-      repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(255,255,255,.025) 39px,rgba(255,255,255,.025) 40px),
-      repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(255,255,255,.025) 39px,rgba(255,255,255,.025) 40px);
-    pointer-events:none; z-index:0;
-  }
-  .wrap { max-width:900px; margin:0 auto; position:relative; z-index:1; }
+  header{background:var(--navy); color:#fff; padding:26px 16px 22px}
+  .head-in{max-width:960px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px}
+  .header-left h1{font-family:Cambria,Georgia,serif; font-size:clamp(26px,4vw,36px); font-weight:700}
+  .header-left h1 span{color:var(--amber)}
+  .header-left p{font-size:12.5px; color:var(--ice); margin-top:6px; line-height:1.6}
+  .home-btn{padding:8px 18px; border:1px solid rgba(255,255,255,.35); border-radius:8px; font-size:13px; font-weight:600; color:#fff; text-decoration:none; transition:all .2s}
+  .home-btn:hover{border-color:var(--amber); color:var(--amber)}
 
-  /* ── HEADER ── */
-  header {
-    padding:28px 0 20px;
-    border-bottom:1px solid var(--border);
-    margin-bottom:32px;
-    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
-  }
-  .header-left h1 {
-    font-family:'Bebas Neue',sans-serif;
-    font-size:clamp(26px,4vw,40px); letter-spacing:3px;
-  }
-  .header-left h1 span { color:var(--amber); }
-  .header-left p {
-    font-family:'IBM Plex Mono',monospace;
-    font-size:10px; letter-spacing:2px; color:var(--muted);
-    margin-top:4px;
-  }
-  .home-btn {
-    padding:8px 18px;
-    border:1px solid var(--border);
-    border-radius:6px;
-    font-family:'IBM Plex Mono',monospace;
-    font-size:11px; letter-spacing:1px;
-    color:var(--muted);
-    text-decoration:none;
-    transition:all .2s;
-  }
-  .home-btn:hover { border-color:var(--amber); color:var(--amber); }
+  .wrap{max-width:960px; margin:0 auto; padding:0 16px}
 
   /* ── TABS ── */
-  .tabs { display:flex; gap:4px; margin-bottom:28px; }
-  .tab {
-    padding:10px 24px;
-    border:1px solid var(--border);
-    border-radius:6px 6px 0 0;
-    font-family:'Bebas Neue',sans-serif;
-    font-size:15px; letter-spacing:2px;
-    color:var(--muted);
-    cursor:pointer;
-    background:transparent;
-    transition:all .2s;
+  .tabs{display:flex; gap:6px; margin:24px 0 22px; flex-wrap:wrap}
+  .tab{
+    padding:11px 24px; border:1px solid var(--line); border-radius:8px;
+    font-family:inherit; font-size:15px; font-weight:700; color:var(--gray);
+    cursor:pointer; background:#fff; transition:all .2s;
   }
-  .tab.active { background:rgba(255,255,255,.07); color:var(--cream); border-color:rgba(255,255,255,.2); }
-  .tab:hover:not(.active) { color:var(--cream); }
-  .tab-content { display:none; }
-  .tab-content.active { display:block; }
+  .tab.active{background:var(--navy); color:#fff; border-color:var(--navy)}
+  .tab:hover:not(.active){border-color:var(--navy); color:var(--navy)}
+  .tab-content{display:none}
+  .tab-content.active{display:block}
+
+  .card{background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 1px 4px rgba(18,34,74,.06)}
 
   /* ── FORM ── */
-  .form-grid {
-    display:grid; grid-template-columns:1fr 1fr; gap:20px;
-    margin-bottom:24px;
+  .form-card{padding:22px}
+  .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:22px}
+  @media(max-width:640px){ .form-grid{grid-template-columns:1fr} }
+  .field{display:flex; flex-direction:column; gap:7px}
+  .field.full{grid-column:1/-1}
+  label{font-size:12px; font-weight:700; letter-spacing:1px; color:var(--gray); text-transform:uppercase}
+  select, input[type=number]{
+    background:#fff; border:1px solid #C7D2E5; border-radius:8px;
+    color:var(--ink); font-family:inherit; font-size:14.5px;
+    padding:10px 14px; width:100%; transition:border-color .2s;
   }
-  @media(max-width:600px){ .form-grid{ grid-template-columns:1fr; } }
+  select{cursor:pointer}
+  select:focus, input:focus{outline:none; border-color:var(--navy); box-shadow:0 0 0 3px rgba(18,34,74,.1)}
+  optgroup{color:var(--navy); font-style:normal; font-weight:700}
 
-  .field { display:flex; flex-direction:column; gap:8px; }
-  .field.full { grid-column:1/-1; }
-
-  label {
-    font-family:'IBM Plex Mono',monospace;
-    font-size:10px; letter-spacing:2px;
-    color:var(--muted); text-transform:uppercase;
+  .radio-group{display:flex; gap:10px; flex-wrap:wrap}
+  .radio-opt{
+    display:flex; align-items:center; gap:8px; padding:10px 16px;
+    border:1px solid #C7D2E5; border-radius:8px; cursor:pointer;
+    transition:all .2s; font-size:14px; background:#fff;
   }
+  .radio-opt:hover{border-color:var(--navy)}
+  .radio-opt.selected{border-color:var(--amberdark); background:#FFF7E8; color:var(--amberdark); font-weight:700}
+  .radio-opt input{display:none}
 
-  select, input[type=number] {
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.15);
-    border-radius:6px;
-    color:var(--cream);
-    font-family:'IBM Plex Sans',sans-serif;
-    font-size:13px;
-    padding:10px 14px;
-    width:100%;
-    transition:border-color .2s;
-    -webkit-appearance:none;
+  .btn-calc{
+    width:100%; padding:14px; background:var(--navy);
+    border:none; border-radius:10px; font-family:inherit;
+    font-size:18px; font-weight:700; letter-spacing:1px;
+    color:#fff; cursor:pointer; transition:all .2s;
   }
-  select { cursor:pointer; }
-  select:focus, input:focus { outline:none; border-color:var(--amber); }
-  select option { background:#1C3557; color:var(--cream); }
-  optgroup { background:#0D2137; color:var(--amber); font-style:normal; font-weight:700; }
-
-  .radio-group { display:flex; gap:10px; flex-wrap:wrap; }
-  .radio-opt {
-    display:flex; align-items:center; gap:8px;
-    padding:9px 16px;
-    border:1px solid rgba(255,255,255,.15);
-    border-radius:6px;
-    cursor:pointer;
-    transition:all .2s;
-    font-size:13px;
-  }
-  .radio-opt:hover { border-color:rgba(255,255,255,.3); }
-  .radio-opt.selected { border-color:var(--amber); background:rgba(217,119,6,.12); color:var(--amber); }
-  .radio-opt input { display:none; }
-
-  /* ── BOTON CALCULAR ── */
-  .btn-calc {
-    width:100%;
-    padding:14px;
-    background:var(--red);
-    border:none; border-radius:8px;
-    font-family:'Bebas Neue',sans-serif;
-    font-size:20px; letter-spacing:3px;
-    color:var(--cream); cursor:pointer;
-    transition:all .2s;
-    margin-bottom:28px;
-  }
-  .btn-calc:hover { background:#991B1B; transform:translateY(-1px); box-shadow:0 6px 24px rgba(185,28,28,.4); }
+  .btn-calc:hover{background:var(--navy2); transform:translateY(-1px); box-shadow:0 6px 20px rgba(18,34,74,.25)}
 
   /* ── RESULTADO ── */
-  #resultado { display:none; }
-  #resultado.visible { display:block; }
+  #resultado{display:none; margin-top:24px}
+  #resultado.visible{display:block}
 
-  .result-header {
-    display:flex; align-items:center; justify-content:space-between;
-    background:rgba(255,255,255,.04);
-    border:1px solid var(--border);
-    border-radius:10px 10px 0 0;
-    padding:16px 20px;
-    border-bottom:none;
+  .result-header{
+    display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    background:var(--navy); color:#fff;
+    border-radius:12px 12px 0 0; padding:16px 20px;
   }
-  .result-nivel {
-    font-family:'Bebas Neue',sans-serif;
-    font-size:22px; letter-spacing:2px;
-  }
-  .result-art {
-    font-family:'IBM Plex Mono',monospace;
-    font-size:10px; letter-spacing:2px; color:var(--muted);
-  }
-  .nivel-badge {
-    padding:4px 14px;
-    border-radius:20px;
-    font-family:'IBM Plex Mono',monospace;
-    font-size:11px; font-weight:600; letter-spacing:1px;
-  }
-  .nivel-1 { background:rgba(217,119,6,.25); color:#FCD34D; border:1px solid rgba(217,119,6,.4); }
-  .nivel-2 { background:rgba(185,28,28,.25); color:#FCA5A5; border:1px solid rgba(185,28,28,.4); }
-  .nivel-3 { background:rgba(127,29,29,.4);  color:#FCA5A5; border:1px solid rgba(127,29,29,.6); }
+  .result-nivel{font-family:Cambria,Georgia,serif; font-size:19px; font-weight:700}
+  .result-art{font-size:12px; color:var(--ice); margin-top:3px}
+  .nivel-badge{padding:5px 16px; border-radius:20px; font-size:13px; font-weight:700; letter-spacing:1px; white-space:nowrap}
+  .nivel-1{background:#FDF1DC; color:var(--amberdark)}
+  .nivel-2{background:#F9E5E3; color:var(--red)}
+  .nivel-3{background:var(--red); color:#fff}
 
-  .result-cards {
+  .result-cards{
     display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
-    background:rgba(255,255,255,.06);
-    border:1px solid var(--border);
-    border-top:none;
-    border-radius:0 0 10px 10px;
-    overflow:hidden;
-    margin-bottom:20px;
+    background:var(--line); border:1px solid var(--line); border-top:none;
+    border-radius:0 0 12px 12px; overflow:hidden; margin-bottom:18px;
   }
-  @media(max-width:600px){ .result-cards{ grid-template-columns:1fr; } }
+  @media(max-width:640px){ .result-cards{grid-template-columns:1fr} }
+  .res-card{padding:18px 20px; background:#fff; display:flex; flex-direction:column; gap:5px}
+  .res-card-label{font-size:11px; font-weight:700; letter-spacing:1.5px; color:var(--gray); text-transform:uppercase}
+  .res-card-main{font-family:Cambria,Georgia,serif; font-weight:700; font-size:clamp(17px,2.3vw,23px); line-height:1.15}
+  .res-card-sub{font-size:12px; color:var(--gray); margin-top:2px}
+  .color-amber{color:var(--amberdark)}
+  .color-red{color:var(--red)}
+  .color-green{color:var(--green)}
 
-  .res-card {
-    padding:20px;
-    background:rgba(255,255,255,.03);
-    display:flex; flex-direction:column; gap:6px;
-  }
-  .res-card-label {
-    font-family:'IBM Plex Mono',monospace;
-    font-size:10px; letter-spacing:2px; color:var(--muted);
-    text-transform:uppercase;
-  }
-  .res-card-main {
-    font-family:'Bebas Neue',sans-serif;
-    font-size:clamp(18px,2.5vw,26px); letter-spacing:1px;
-    line-height:1.1;
-  }
-  .res-card-sub {
-    font-size:11px; color:var(--muted); margin-top:2px;
-  }
-  .color-amber { color:var(--amber); }
-  .color-red   { color:#FCA5A5; }
-  .color-green { color:#86EFAC; }
-
-  .art55-box {
-    border:1px solid rgba(14,116,144,.4);
-    border-radius:8px;
-    padding:16px 20px;
-    background:rgba(14,116,144,.08);
-    margin-bottom:20px;
+  .art55-box{
+    border:1px solid #BFDFD0; border-left:5px solid var(--green); border-radius:10px;
+    padding:16px 20px; background:#F1F8F4; margin-bottom:18px;
     display:flex; gap:14px; align-items:flex-start;
   }
-  .art55-icon { font-size:22px; flex-shrink:0; }
-  .art55-title {
-    font-family:'Bebas Neue',sans-serif;
-    font-size:16px; letter-spacing:1px; color:#67E8F9;
-    margin-bottom:4px;
-  }
-  .art55-text { font-size:13px; line-height:1.6; color:rgba(255,255,255,.7); }
+  .art55-icon{font-size:22px; flex-shrink:0}
+  .art55-title{font-family:Cambria,Georgia,serif; font-size:16px; font-weight:700; color:var(--green); margin-bottom:4px}
+  .art55-text{font-size:14px; line-height:1.6; color:var(--ink)}
 
-  .nota-n3 {
-    border:1px solid rgba(127,29,29,.4);
-    border-radius:8px;
-    padding:14px 18px;
-    background:rgba(127,29,29,.1);
-    font-size:12px; line-height:1.6; color:rgba(255,255,255,.65);
-    margin-bottom:20px;
+  .nota-n3{
+    border:1px solid #EFC5C1; border-left:5px solid var(--red); border-radius:10px;
+    padding:14px 18px; background:#FBF0EF;
+    font-size:13.5px; line-height:1.6; color:var(--ink); margin-bottom:18px;
   }
 
-  .btn-reset {
-    width:100%; padding:12px;
-    background:transparent;
-    border:1px solid var(--border);
-    border-radius:8px;
-    font-family:'Bebas Neue',sans-serif;
-    font-size:16px; letter-spacing:2px;
-    color:var(--muted); cursor:pointer;
-    transition:all .2s;
+  .btn-reset{
+    width:100%; padding:12px; background:#fff;
+    border:1px solid #C7D2E5; border-radius:10px;
+    font-family:inherit; font-size:15px; font-weight:700;
+    color:var(--gray); cursor:pointer; transition:all .2s;
   }
-  .btn-reset:hover { border-color:var(--amber); color:var(--amber); }
+  .btn-reset:hover{border-color:var(--navy); color:var(--navy)}
 
-  /* ── UMBRALES TABLE ── */
-  .uma-nota {
-    background:rgba(217,119,6,.1);
-    border:1px solid rgba(217,119,6,.3);
-    border-radius:8px;
-    padding:12px 18px;
-    font-family:'IBM Plex Mono',monospace;
-    font-size:12px; color:var(--amber);
-    margin-bottom:20px;
+  /* ── UMBRALES ── */
+  .uma-nota{
+    background:#FFF7E8; border:1px solid #F3DCAE; border-left:5px solid var(--amber);
+    border-radius:10px; padding:13px 18px;
+    font-size:13.5px; color:var(--ink); margin-bottom:20px; line-height:1.6;
   }
+  .umb-section{margin-bottom:28px; padding:20px}
+  .umb-title{
+    font-family:Cambria,Georgia,serif; font-size:18px; font-weight:700; color:var(--navy);
+    margin-bottom:12px; padding-bottom:8px; border-bottom:2px solid var(--amber);
+  }
+  .tabla-scroll{overflow-x:auto}
+  table.umb{width:100%; border-collapse:collapse; font-size:13px}
+  table.umb th{
+    font-size:11px; font-weight:700; letter-spacing:1.5px; color:var(--gray);
+    text-align:left; padding:8px 10px; border-bottom:2px solid var(--line);
+    text-transform:uppercase; white-space:nowrap; background:#F8FAFD;
+  }
+  table.umb td{padding:10px; border-bottom:1px solid #EEF1F7; vertical-align:middle; line-height:1.45}
+  table.umb tr:last-child td{border-bottom:none}
+  table.umb tr:hover td{background:#F8FAFD}
+  table.umb td:first-child{font-family:Cambria,Georgia,serif; font-size:15px; font-weight:700; color:var(--navy); white-space:nowrap}
+  .pesos{font-size:12.5px; color:var(--green); font-weight:700; white-space:nowrap}
+  .siempre{color:var(--red); font-weight:700; font-size:12.5px}
+  .na{color:#A6AEBD; font-size:12px}
 
-  .umb-section { margin-bottom:28px; }
-  .umb-title {
-    font-family:'Bebas Neue',sans-serif;
-    font-size:16px; letter-spacing:2px; color:var(--amber);
-    margin-bottom:12px; padding-bottom:8px;
-    border-bottom:1px solid rgba(255,255,255,.07);
-  }
-
-  table.umb {
-    width:100%; border-collapse:collapse; font-size:12px;
-  }
-  table.umb th {
-    font-family:'IBM Plex Mono',monospace;
-    font-size:9px; letter-spacing:2px; color:var(--muted);
-    text-align:left; padding:8px 12px;
-    border-bottom:1px solid rgba(255,255,255,.08);
-    text-transform:uppercase; white-space:nowrap;
-  }
-  table.umb td {
-    padding:10px 12px;
-    border-bottom:1px solid rgba(255,255,255,.04);
-    color:rgba(255,255,255,.75); vertical-align:middle;
-    line-height:1.4;
-  }
-  table.umb tr:last-child td { border-bottom:none; }
-  table.umb tr:hover td { background:rgba(255,255,255,.03); }
-  table.umb td:first-child {
-    font-family:'Bebas Neue',sans-serif;
-    font-size:16px; letter-spacing:1px; color:var(--amber);
-    white-space:nowrap;
-  }
-  .pesos { font-family:'IBM Plex Mono',monospace; font-size:11px; color:#86EFAC; }
-  .prohib { color:#FCA5A5; font-weight:600; font-size:11px; }
-  .na { color:rgba(255,255,255,.25); font-size:11px; }
-
-  /* ── FOOTER ── */
-  footer {
-    margin-top:40px; padding-top:20px;
-    border-top:1px solid rgba(255,255,255,.07);
-    font-family:'IBM Plex Mono',monospace;
-    font-size:10px; letter-spacing:1px;
-    color:rgba(255,255,255,.2); text-align:center;
+  footer{
+    max-width:960px; margin:40px auto 0; padding:16px;
+    border-top:1px solid var(--line);
+    font-size:12px; color:var(--gray); text-align:center; line-height:1.8;
   }
 </style>
 </head>
 <body>
-<div class="wrap">
 
 <header>
-  <div class="header-left">
-    <h1>CALCULADORA <span>LFPIORPI</span></h1>
-    <p>ARTS. 53 Y 54 LFPIORPI · Ley DOF 16-07-2025 · Reglamento DOF 27-03-2026 · ACUERDO 115/2026 DOF 07-08-2026 · UMA 2026 = $117.31/DÍA · INEGI, VIGENTE DESDE EL 01-02-2026</p>
+  <div class="head-in">
+    <div class="header-left">
+      <h1>CALCULADORA <span>LFPIORPI</span></h1>
+      <p>Arts. 53 y 54 LFPIORPI · Ley DOF 16-07-2025 · Reglamento DOF 27-03-2026 · ACUERDO 115/2026 DOF 07-08-2026<br>UMA 2026 = $117.31/día · INEGI, vigente desde el 1 de febrero de 2026</p>
+    </div>
+    <a class="home-btn" href="../guia/">← Inicio</a>
   </div>
-  <a class="home-btn" href="../guia/">← INICIO</a>
 </header>
+
+<div class="wrap">
 
 <!-- TABS -->
 <div class="tabs">
-  <button class="tab active" onclick="showTab('calc')">🧮  CALCULADORA</button>
-  <button class="tab" onclick="showTab('umb')">📋  UMBRALES ART. 17</button>
+  <button class="tab active" onclick="showTab('calc')">🧮  Calculadora</button>
+  <button class="tab" onclick="showTab('umb')">📋  Umbrales y efectivo</button>
 </div>
 
 <!-- ══ TAB: CALCULADORA ══════════════════════════════════════════════════════ -->
 <div id="tab-calc" class="tab-content active">
 
+  <div class="card form-card">
   <div class="form-grid">
 
     <!-- Obligación incumplida -->
@@ -328,7 +193,7 @@
       <select id="selObligacion" onchange="onObligChange()">
         <option value="">— Selecciona la obligación —</option>
 
-        <optgroup label="── IDENTIFICACIÓN Y EXPEDIENTE (Art. 18 Fracc. I a III) ──">
+        <optgroup label="── IDENTIFICACIÓN Y EXPEDIENTE (Art. 18 Fracc. I a V) ──">
           <option value="1|id_cliente">No identifiqué ni verifiqué la identidad del cliente antes de la operación (Fracc. I)</option>
           <option value="1|exp_incompleto">El expediente del cliente está incompleto o no se integró conforme al Art. 18</option>
           <option value="1|sin_actividad">No solicité la actividad u ocupación al establecer una Relación de negocios (Fracc. II)</option>
@@ -338,7 +203,7 @@
           <option value="1|sin_facilidades">No brindé facilidades para la visita de verificación (Fracc. V)</option>
         </optgroup>
 
-        <optgroup label="── SOCIEDADES MERCANTILES · CAPÍTULO IV BIS (Arts. 33, 33 Bis, 33 Ter) ──">
+        <optgroup label="── FEDATARIOS Y SOCIEDADES MERCANTILES (Arts. 33, 33 Bis, 33 Ter) ──">
           <option value="5|fp_instrumento">Fedatario: no identifiqué la forma de pago en el instrumento desde 8,025 UMA (Art. 33)</option>
           <option value="5|bc_no_registro">Sociedad mercantil: no atendí el requerimiento para determinar a mi Beneficiario Controlador ni conservé el soporte (Art. 33 Bis)</option>
           <option value="5|bc_no_actualiz">Sociedad mercantil: no registré la información del BC en el sistema de la Secretaría de Economía (Art. 33 Ter)</option>
@@ -367,8 +232,8 @@
         </optgroup>
 
         <optgroup label="── PROHIBICIONES DE EFECTIVO (Art. 32) ──">
-          <option value="7|efectivo_viii">Recibí efectivo en venta de vehículos por encima de 3,210 UMA (Fracc. VIII)</option>
-          <option value="7|efectivo_v">Recibí efectivo en operación inmobiliaria por encima de 8,025 UMA (Fracc. V)</option>
+          <option value="7|efectivo_viii">Recibí efectivo en venta de vehículos por encima de 3,210 UMA (Art. 32 Fracc. II)</option>
+          <option value="7|efectivo_v">Recibí efectivo en operación inmobiliaria por encima de 8,025 UMA (Art. 32 Fracc. I)</option>
           <option value="7|efectivo_otros">Realicé operación prohibida con efectivo, metales o monedas (Art. 32)</option>
         </optgroup>
 
@@ -409,6 +274,7 @@
   </div>
 
   <button class="btn-calc" onclick="calcular()">CALCULAR SANCIÓN</button>
+  </div><!-- /form-card -->
 
   <!-- RESULTADO -->
   <div id="resultado">
@@ -459,11 +325,12 @@
 <div id="tab-umb" class="tab-content">
 
   <div class="uma-nota">
-    ★  UMA 2026 = $117.31 / día · INEGI, vigente desde el 1 de febrero de 2026. Los montos en pesos son referenciales y deben recalcularse con la UMA vigente al día del acto u operación.
+    ★ &nbsp;UMA 2026 = <b>$117.31 / día</b> · INEGI, vigente desde el 1 de febrero de 2026. Los montos en pesos son referenciales y deben recalcularse con la UMA vigente al día del acto u operación.
   </div>
 
-  <div class="umb-section">
-    <div class="umb-title">ACTIVIDADES VULNERABLES CON UMBRALES EXPRESOS — Art. 17 LFPIORPI</div>
+  <div class="card umb-section">
+    <div class="umb-title">Umbrales de identificación y aviso — Art. 17 LFPIORPI</div>
+    <div class="tabla-scroll">
     <table class="umb">
       <thead>
         <tr>
@@ -471,161 +338,64 @@
           <th>Actividad vulnerable</th>
           <th>Identificación</th>
           <th>Aviso</th>
-          <th>Equiv. aviso $MXN</th>
-          <th>Prohib. efectivo</th>
+          <th>Aviso en $ (UMA 2026)</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>I</td>
-          <td>Juegos y sorteos con premios en efectivo</td>
-          <td>≥ 325 UMA/op</td>
-          <td>≥ 325 UMA/op</td>
-          <td class="pesos">$38,125.75</td>
-          <td class="prohib">≥ 325 UMA</td>
-        </tr>
-        <tr>
-          <td>II</td>
-          <td>Tarjetas de crédito/servicios (gasto mensual acumulado)</td>
-          <td>≥ 805 UMA/mes</td>
-          <td>≥ 1,285 UMA/mes</td>
-          <td class="pesos">$150,743.35</td>
-          <td class="na">N/A</td>
-        </tr>
-        <tr>
-          <td>II</td>
-          <td>Tarjetas prepagadas y monederos electrónicos (por operación)</td>
-          <td>≥ 645 UMA/op</td>
-          <td>≥ 645 UMA/op</td>
-          <td class="pesos">$75,664.95</td>
-          <td class="na">N/A</td>
-        </tr>
-        <tr>
-          <td>III</td>
-          <td>Transmisión de fondos (cuentas de terceros / giros)</td>
-          <td>≥ 645 UMA/op</td>
-          <td>≥ 645 UMA/op</td>
-          <td class="pesos">$75,664.95</td>
-          <td class="na">N/A</td>
-        </tr>
-        <tr>
-          <td>IV</td>
-          <td>Mutuo, garantía, créditos y préstamos (no entidades financieras)</td>
-          <td>Toda op. habitual</td>
-          <td>≥ 1,605 UMA</td>
-          <td class="pesos">$188,282.55</td>
-          <td class="na">N/A</td>
-        </tr>
-        <tr>
-          <td>V</td>
-          <td>Construcción, desarrollo e intermediación inmobiliaria</td>
-          <td>Toda op. habitual</td>
-          <td>≥ 8,025 UMA</td>
-          <td class="pesos">$941,412.75</td>
-          <td class="prohib">≥ 8,025 UMA</td>
-        </tr>
-        <tr>
-          <td>V Bis</td>
-          <td>Recepción de recursos para Desarrollo Inmobiliario (NUEVA 2025)</td>
-          <td>Toda recepción</td>
-          <td>≥ 8,025 UMA</td>
-          <td class="pesos">$941,412.75</td>
-          <td class="prohib">≥ 8,025 UMA</td>
-        </tr>
-        <tr>
-          <td>VI</td>
-          <td>Comercialización o distribución habitual de metales y piedras preciosas</td>
-          <td>≥ 805 UMA/op</td>
-          <td>≥ 1,605 UMA/op</td>
-          <td class="pesos">$188,282.55</td>
-          <td class="prohib">≥ 805 UMA</td>
-        </tr>
-        <tr>
-          <td>VII</td>
-          <td>Obras de arte, antigüedades y subasta de bienes</td>
-          <td>≥ 4,815 UMA/op</td>
-          <td>≥ 4,815 UMA/op</td>
-          <td class="pesos">$565,348.65</td>
-          <td class="na">N/A</td>
-        </tr>
-        <tr>
-          <td>VIII</td>
-          <td>Vehículos nuevos o usados (aéreos, marítimos, terrestres)</td>
-          <td>≥ 3,210 UMA</td>
-          <td>≥ 6,420 UMA</td>
-          <td class="pesos">$753,130.20</td>
-          <td class="prohib">≥ 3,210 UMA</td>
-        </tr>
-        <tr>
-          <td>IX</td>
-          <td>Blindaje de vehículos o bienes</td>
-          <td>≥ 2,410 UMA/op</td>
-          <td>≥ 2,410 UMA/op</td>
-          <td class="pesos">$282,717.10</td>
-          <td class="na">N/A</td>
-        </tr>
-        <tr>
-          <td>X</td>
-          <td>Traslado o custodia de dinero o valores</td>
-          <td>≥ 3,210 UMA/op</td>
-          <td>≥ 3,210 UMA/op</td>
-          <td class="pesos">$376,565.10</td>
-          <td class="na">N/A</td>
-        </tr>
-        <tr>
-          <td>XI</td>
-          <td>Prestación de servicios profesionales (notarios, contadores, abogados — supuestos específicos)</td>
-          <td>≥ 3,210 UMA/op</td>
-          <td>≥ 3,210 UMA/op</td>
-          <td class="pesos">$376,565.10</td>
-          <td class="na">N/A</td>
-        </tr>
-        <tr>
-          <td>XII</td>
-          <td>Prestación de servicios de fe pública (fedatarios)</td>
-          <td>≥ 3,210 UMA/op</td>
-          <td>≥ 3,210 UMA/op</td>
-          <td class="pesos">$376,565.10</td>
-          <td class="na">N/A</td>
-        </tr>
-        <tr>
-          <td>XIII</td>
-          <td>Recepción de donativos por organizaciones sin fines de lucro</td>
-          <td>≥ 3,210 UMA/op</td>
-          <td>≥ 3,210 UMA/op</td>
-          <td class="pesos">$376,565.10</td>
-          <td class="na">N/A</td>
-        </tr>
-        <tr>
-          <td>XIV</td>
-          <td>Prestación de servicios de comercio exterior (agentes aduanales)</td>
-          <td>Toda op. habitual</td>
-          <td>≥ 3,210 UMA/op</td>
-          <td class="pesos">$376,565.10</td>
-          <td class="na">N/A</td>
-        </tr>
-        <tr>
-          <td>XV</td>
-          <td>Arrendamiento de inmuebles (renta mensual)</td>
-          <td>≥ 1,605 UMA/mes</td>
-          <td>≥ 3,210 UMA/mes</td>
-          <td class="pesos">$376,565.10</td>
-          <td class="na">N/A</td>
-        </tr>
-        <tr>
-          <td>XVI</td>
-          <td>Préstamos o créditos sobre alhajas, metales y piedras preciosas (casas de empeño)</td>
-          <td>≥ 325 UMA/op</td>
-          <td>≥ 645 UMA/op</td>
-          <td class="pesos">$75,664.95</td>
-          <td class="na">N/A</td>
-        </tr>
+        <tr><td>I</td><td>Juegos con apuesta, concursos o sorteos</td><td>325 UMA</td><td>645 UMA</td><td class="pesos">$75,664.95</td></tr>
+        <tr><td>II a)</td><td>Tarjetas de servicios o de crédito, por sujetos distintos a Entidades Financieras (gasto mensual acumulado)</td><td>805 UMA/mes</td><td>1,285 UMA/mes</td><td class="pesos">$150,743.35</td></tr>
+        <tr><td>II b)</td><td>Tarjetas prepagadas</td><td>645 UMA/op</td><td>645 UMA</td><td class="pesos">$75,664.95</td></tr>
+        <tr><td>II c)</td><td>Instrumentos de almacenamiento de valor monetario</td><td>645 UMA/op</td><td>645 UMA</td><td class="pesos">$75,664.95</td></tr>
+        <tr><td>III</td><td>Emisión y comercialización de cheques de viajero</td><td class="siempre">Siempre</td><td>645 UMA</td><td class="pesos">$75,664.95</td></tr>
+        <tr><td>IV</td><td>Mutuo, garantía, préstamos o créditos, por sujetos distintos a Entidades Financieras</td><td class="siempre">Siempre</td><td>1,605 UMA</td><td class="pesos">$188,282.55</td></tr>
+        <tr><td>V</td><td>Construcción o desarrollo de inmuebles e intermediación en la transmisión de propiedad</td><td class="siempre">Siempre</td><td>8,025 UMA</td><td class="pesos">$941,412.75</td></tr>
+        <tr><td>V Bis</td><td>Recepción de recursos destinados a un Desarrollo Inmobiliario para su venta o renta — nueva en la reforma de 2025</td><td class="siempre">Siempre</td><td>8,025 UMA</td><td class="pesos">$941,412.75</td></tr>
+        <tr><td>VI</td><td>Metales preciosos, piedras preciosas, joyas o relojes</td><td>805 UMA</td><td>1,605 UMA</td><td class="pesos">$188,282.55</td></tr>
+        <tr><td>VII</td><td>Subasta o comercialización de obras de arte</td><td>2,410 UMA</td><td>4,815 UMA</td><td class="pesos">$564,847.65</td></tr>
+        <tr><td>VIII</td><td>Vehículos nuevos o usados: aéreos, marítimos o terrestres</td><td>3,210 UMA</td><td>6,420 UMA</td><td class="pesos">$753,130.20</td></tr>
+        <tr><td>IX</td><td>Servicios de blindaje de vehículos terrestres y de bienes inmuebles</td><td>2,410 UMA</td><td>4,815 UMA</td><td class="pesos">$564,847.65</td></tr>
+        <tr><td>X</td><td>Traslado o custodia de dinero o valores</td><td class="siempre">Siempre</td><td>3,210 UMA · y <span class="siempre">siempre</span> si no puede determinarse el monto</td><td class="pesos">$376,565.10</td></tr>
+        <tr><td>XI</td><td>Servicios profesionales independientes (compraventa de inmuebles, administración de recursos, manejo de cuentas, constitución y operación de personas morales y vehículos corporativos)</td><td class="siempre">Siempre</td><td>Cuando se realice operación financiera en nombre del cliente</td><td class="na">Sin umbral monetario</td></tr>
+        <tr><td>XII A a)</td><td>Notarios: transmisión o constitución de derechos reales sobre inmuebles</td><td class="na">—</td><td><b>8,000</b> UMA (la cifra del apartado A es 8,000, no 8,025)</td><td class="pesos">$938,480.00</td></tr>
+        <tr><td>XII A b), c), e)</td><td>Notarios: poderes irrevocables; constitución de morales y movimientos de capital, fusión, escisión, acciones; mutuo o crédito fuera del sistema financiero</td><td class="na">—</td><td class="siempre">Siempre</td><td class="na">N/A</td></tr>
+        <tr><td>XII A d)</td><td>Notarios: fideicomisos traslativos de dominio o de garantía</td><td class="na">—</td><td>4,000 UMA</td><td class="pesos">$469,240.00</td></tr>
+        <tr><td>XII B a)</td><td>Corredores públicos: avalúos sobre bienes</td><td class="na">—</td><td>8,025 UMA</td><td class="pesos">$941,412.75</td></tr>
+        <tr><td>XII B b–d)</td><td>Corredores públicos: morales mercantiles y capital; fideicomisos en que puedan actuar; mutuo o crédito mercantil fuera del sistema financiero</td><td class="na">—</td><td class="siempre">Siempre</td><td class="na">Sin umbral</td></tr>
+        <tr><td>XII C · D</td><td>Servidores públicos con fe pública · Personas facilitadoras de mecanismos alternativos de solución de controversias (nuevo apartado D, 2025)</td><td class="na">—</td><td>Conforme al apartado aplicable (D: los del apartado A)</td><td class="na">—</td></tr>
+        <tr><td>XIII</td><td>Recepción de donativos por asociaciones y sociedades sin fines de lucro</td><td>1,605 UMA</td><td>3,210 UMA</td><td class="pesos">$376,565.10</td></tr>
+        <tr><td>XIV</td><td>Comercio exterior (agentes y agencias aduanales): vehículos, máquinas de juego, equipos para tarjetas de pago, materiales de blindaje — cualquier valor; joyas y relojes desde 485 UMA y obras de arte desde 4,815 UMA de valor individual</td><td>Según mercancía</td><td class="siempre">Siempre</td><td class="na">—</td></tr>
+        <tr><td>XV</td><td>Arrendamiento de inmuebles (valor mensual)</td><td><b>Superior</b> a 1,605 UMA/mes</td><td>3,210 UMA/mes</td><td class="pesos">$376,565.10</td></tr>
+        <tr><td>XVI</td><td>Intercambio de activos virtuales, incluidas operaciones con ciudadanos mexicanos desde otra jurisdicción</td><td class="siempre">Siempre</td><td>210 UMA/op · 4 UMA cuando haya cobro de contraprestación</td><td class="pesos">$24,635.10 · $469.24</td></tr>
       </tbody>
     </table>
+    </div>
   </div>
 
-  <div class="umb-section">
-    <div class="umb-title">NIVELES DE SANCIÓN — Art. 54 LFPIORPI</div>
+  <div class="card umb-section">
+    <div class="umb-title">Prohibiciones de efectivo — Art. 32 LFPIORPI</div>
+    <div class="tabla-scroll">
+    <table class="umb">
+      <thead>
+        <tr><th>Fracc.</th><th>Supuesto prohibido en efectivo o metales</th><th>Desde (UMA)</th><th>Equivalente $ (UMA 2026)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>I</td><td>Constitución o transmisión de derechos reales sobre bienes inmuebles</td><td>8,025</td><td class="pesos">$941,412.75</td></tr>
+        <tr><td>II</td><td>Transmisión de propiedad o derechos reales sobre vehículos nuevos o usados, aéreos, marítimos o terrestres</td><td>3,210</td><td class="pesos">$376,565.10</td></tr>
+        <tr><td>III</td><td>Relojes, joyería, metales y piedras preciosas (por pieza o lote) y obras de arte</td><td>3,210</td><td class="pesos">$376,565.10</td></tr>
+        <tr><td>IV</td><td>Boletos para juegos con apuesta, concursos o sorteos, y entrega o pago de premios</td><td>3,210</td><td class="pesos">$376,565.10</td></tr>
+        <tr><td>V</td><td>Servicios de blindaje de vehículos o inmuebles</td><td>3,210</td><td class="pesos">$376,565.10</td></tr>
+        <tr><td>VI</td><td>Transmisión de dominio o derechos sobre partes sociales o acciones de personas morales</td><td>3,210</td><td class="pesos">$376,565.10</td></tr>
+        <tr><td>VII</td><td>Derechos personales de uso o goce (arrendamiento) de inmuebles, vehículos y blindaje</td><td>3,210 mensuales</td><td class="pesos">$376,565.10</td></tr>
+        <tr><td>VIII</td><td>Consignación de pago relacionada con las fracciones I a VII</td><td colspan="2">El umbral de la fracción que corresponda</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="font-size:12.5px;color:var(--gray);margin-top:10px">La prohibición alcanza a las dos partes —quien paga y quien acepta el pago—, aun cuando el pago en efectivo se haga por conducto de una Entidad Financiera. Su infracción se sanciona en el nivel más alto (Art. 53 Fracc. VII · Art. 54 Fracc. III).</p>
+  </div>
+
+  <div class="card umb-section">
+    <div class="umb-title">Niveles de sanción — Art. 54 LFPIORPI</div>
+    <div class="tabla-scroll">
     <table class="umb">
       <thead>
         <tr><th>Nivel</th><th>Aplica a (Art. 53)</th><th>Mínimo UMA</th><th>Máximo UMA</th><th>Mínimo $MXN</th><th>Máximo $MXN</th></tr>
@@ -647,16 +417,19 @@
           <td>3</td>
           <td>Fracc. VI y VII — <b>Omisión</b> de Avisos y operaciones prohibidas por el Art. 32</td>
           <td>10,000</td><td>65,000</td>
-          <td class="pesos">$1,173,100.00</td><td class="prohib">$7,625,150.00 ó 10–100% del valor de la operación (lo que resulte MAYOR)</td>
+          <td class="pesos">$1,173,100.00</td><td class="siempre">$7,625,150.00 ó 10–100% del valor de la operación (lo que resulte MAYOR)</td>
         </tr>
       </tbody>
     </table>
+    </div>
   </div>
 
 </div><!-- /tab-umb -->
 
 <footer>
-  LFPIORPI Ley DOF 16-07-2025 · Reglamento DOF 27-03-2026 · ACUERDO 115/2026 DOF 07-08-2026 · Arts. 17, 18, 20, 32, 33, 36, 53 a 62 · UMA 2026 = $117.31/día · INEGI, vigente desde el 1 de febrero de 2026 &nbsp;·&nbsp; <b>GMC360 · 360Educa · ASONOC · LEXQUO</b> desde el 01-02-2026 · Herramienta de referencia — no sustituye asesoría jurídica · v2.0 · 11-08-2026
+  LFPIORPI · Ley DOF 16-07-2025 · Reglamento DOF 27-03-2026 · ACUERDO 115/2026 DOF 07-08-2026 · Arts. 17, 18, 20, 32, 33, 53 a 61 · UMA 2026 = $117.31/día (INEGI, vigente desde el 1 de febrero de 2026)<br>
+  <b>GMC360 · 360Educa · ASONOC · LEXQUO</b> · Herramienta de referencia — no sustituye asesoría jurídica<br>
+  Material vivo: si detectamos algún ajuste, se actualiza a la última versión en esta misma liga.
 </footer>
 
 </div><!-- /wrap -->
@@ -670,7 +443,7 @@ const NIVELES = {
   3: { min:10000, max:65000, label:'Nivel 3',  art:'Art. 53 Fracc. VI–VII · Art. 54 Fracc. III' },
   4: { min:200,   max:2000,  label:'Nivel 1',  art:'Art. 53 Fracc. IV · Art. 54 Fracc. I' },
   5: { min:2000,  max:10000, label:'Nivel 2',  art:'Art. 53 Fracc. V · Art. 54 Fracc. II — Arts. 33, 33 Bis y 33 Ter' },
-  6: { min:10000, max:65000, label:'Nivel 3',  art:'Art. 53 Fracc. VI · Art. 54 Fracc. III — la extemporaneidad de más de 30 días se remite a la sanción de omisión (remisión defectuosa: el texto envía al Art. 54 Fracc. II)' },
+  6: { min:10000, max:65000, label:'Nivel 3',  art:'Art. 53 Fracc. VI · Art. 54 Fracc. III — la extemporaneidad de más de 30 días se sanciona como omisión' },
   7: { min:10000, max:65000, label:'Nivel 3',  art:'Art. 53 Fracc. VII · Art. 54 Fracc. III' },
   8: { min:200,   max:2000,  label:'Nivel 1',  art:'Art. 53 Fracc. III · Art. 54 Fracc. I — extemporaneidad dentro de 30 días' },
 };
@@ -712,7 +485,7 @@ function calcular() {
     alert('Esta obligación todavía no es exigible y no puede fundar una multa hoy.\n\n'
         + 'Las fracciones VII a XI del artículo 18 se difirieron por el Transitorio Tercero del Decreto de reforma a la Ley, '
         + 'y las Reglas las fijaron entre el 1 de marzo de 2027 y el ejercicio 2028.\n\n'
-        + 'Consulta la pestaña de Obligaciones del Art. 18 para el calendario completo.');
+        + 'Consulta la guía para el calendario completo.');
     return;
   }
   const n         = parseInt(document.getElementById('numInfracciones').value) || 1;
@@ -756,8 +529,7 @@ function calcular() {
 
   const badge = document.getElementById('resNivelBadge');
   badge.textContent = cfg.label;
-  badge.className = 'nivel-badge nivel-' + (nivelKey >= 6 ? 3 : nivelKey >= 5 ? 2 : nivelKey >= 2 && nivelKey <= 2 ? 2 : nivelKey === 1 || nivelKey === 4 ? 1 : 3);
-  badge.className = 'nivel-badge nivel-' + (nivelKey === 1 || nivelKey === 4 ? '1' : nivelKey === 2 || nivelKey === 5 ? '2' : '3');
+  badge.className = 'nivel-badge nivel-' + (nivelKey === 1 || nivelKey === 4 || nivelKey === 8 ? '1' : nivelKey === 2 || nivelKey === 5 ? '2' : '3');
 
   document.getElementById('resUmaRango').textContent = cfg.min.toLocaleString('es-MX') + ' – ' + cfg.max.toLocaleString('es-MX') + ' UMA';
   document.getElementById('resUmaSub').textContent   = 'por infracción · ' + n + (n===1?' infracción':' infracciones') + ' ingresadas';
