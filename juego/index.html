@@ -142,6 +142,18 @@
   .btn-restart:hover{background:var(--navy); color:#fff}
 
   footer{max-width:860px; margin:40px auto 0; padding:16px; border-top:1px solid var(--line); font-size:12px; color:var(--gray); text-align:center; line-height:1.7}
+
+  /* ── Nomenclatura de ordenamientos ── */
+  .ref{display:inline-block;font-size:.62em;font-weight:700;letter-spacing:.5px;
+       line-height:1;padding:2px 5px;border-radius:4px;margin-left:3px;
+       vertical-align:.28em;white-space:nowrap;font-family:Calibri,"Segoe UI",Arial,sans-serif}
+  .r-l  {background:#E3E9F7;color:#12224A}
+  .r-r  {background:#E4F2EB;color:#245C45}
+  .r-rcg{background:#FDF1DC;color:#8C570D}
+  .r-cpf{background:#F3E6F2;color:#6B2160}
+  .leyenda{background:#fff;border:1px solid #E2E7F0;border-left:5px solid #12224A;
+           border-radius:10px;padding:12px 18px;margin:18px 0;font-size:13.5px;line-height:1.8}
+  .leyenda b{color:#12224A}
 </style>
 </head>
 <body>
@@ -203,31 +215,31 @@
 
 </div><!-- /shell -->
 
-<footer>LFPIORPI · Ley, Reglamento y ACUERDO 115/2026 · Arts. 17, 18, 32, 33, 54 · Herramienta didáctica<br><b>GMC360 · 360Educa · ASONOC · LEXQUO</b></footer>
+<footer>En las pistas, <b>L</b> = Ley · <b>R</b> = Reglamento · <b>RCG</b> = Reglas de Carácter General.<br>LFPIORPI · Ley, Reglamento y ACUERDO 115/2026 · Arts. 17, 18, 32, 33, 54<span class="ref r-l">L</span> · Herramienta didáctica<br><b>GMC360 · 360Educa · ASONOC · LEXQUO</b></footer>
 
 <script>
 // 10 palabras — nivel avanzado (medio → difícil), basadas en la reforma y las nuevas Reglas
 const WORDS = [
   { word:"PADRON",       diff:"medio",
-    hint:"Registro que administra el SAT y en el que la fracción IV Bis del artículo 18 obliga a mantener al día el alta, la modificación y la baja a través del Portal en Internet. Unas 218 mil personas están inscritas; no tenerlo actualizado es multa de nivel 1." },
+    hint:"Registro que administra el SAT y en el que la fracción IV Bis del artículo 18 L obliga a mantener al día el alta, la modificación y la baja a través del Portal en Internet. Unas 218 mil personas están inscritas; no tenerlo actualizado es multa de nivel 1." },
   { word:"ABSTENCION",   diff:"medio",
-    hint:"Deber del artículo 21 cuando el cliente se niega a proporcionar información o documentos: no realizar el acto u operación. Si el expediente está incompleto y la operación se hizo de todos modos, el propio expediente prueba la infracción." },
+    hint:"Deber del artículo 21 L cuando el cliente se niega a proporcionar información o documentos: no realizar el acto u operación. Si el expediente está incompleto y la operación se hizo de todos modos, el propio expediente prueba la infracción." },
   { word:"ACUMULACION",  diff:"medio",
     hint:"Regla del artículo 7 del Reglamento: las operaciones con un mismo cliente, por tipo de acto, se suman en un periodo de hasta seis meses. El Aviso se presenta al momento de la operación con la que se alcanza el umbral, sin esperar a que termine el periodo." },
   { word:"REPRESENTANTE",diff:"dificil",
-    hint:"Figura del artículo 20: persona designada para el cumplimiento de las obligaciones de la Ley, cuya designación debe aceptarse y mantenerse vigente. En el sector financiero le dicen «oficial de cumplimiento», pero la LFPIORPI la llama persona ________ Encargada de Cumplimiento." },
+    hint:"Figura del artículo 20 L: persona designada para el cumplimiento de las obligaciones de la Ley, cuya designación debe aceptarse y mantenerse vigente. En el sector financiero le dicen «oficial de cumplimiento», pero la LFPIORPI la llama persona ________ Encargada de Cumplimiento." },
   { word:"METODOLOGIA",  diff:"dificil",
     hint:"Pieza central del Capítulo II Quáter de las Reglas: el procedimiento documentado para evaluar riesgos y clasificar a los clientes por grado de riesgo. Su diseño debe quedar plasmado dentro del Manual de Políticas Internas, exigible el 1 de marzo de 2027." },
   { word:"MITIGANTES",   diff:"dificil",
-    hint:"Definición nueva de las Reglas (artículo 3, fracción XI Quinquies): los controles y medidas que reducen el riesgo identificado. En la matriz de riesgos se aplican después de medir el riesgo inherente y antes de determinar el riesgo residual." },
+    hint:"Definición nueva de las Reglas (artículo 3, fracción XI Quinquies RCG): los controles y medidas que reducen el riesgo identificado. En la matriz de riesgos se aplican después de medir el riesgo inherente y antes de determinar el riesgo residual." },
   { word:"TRANSACCIONAL",diff:"dificil",
     hint:"Adjetivo del perfil de cada cliente definido en la fracción XI Sexties —así, con esa grafía, se publicó— del artículo 3 de las Reglas. Tiene seis elementos y es la base del monitoreo con mecanismos automatizados, exigible el 1 de junio de 2027." },
   { word:"EXTEMPORANEO", diff:"dificil",
     hint:"Adjetivo del Aviso presentado tarde. Dentro de los 30 días siguientes al plazo: multa de nivel 1, de 200 a 2,000 UMA. Un solo día después de esos 30: se sanciona como omisión, en el nivel más alto. El precipicio más caro de todo el régimen." },
   { word:"CONSIGNACION", diff:"dificil",
-    hint:"Fracción VIII del artículo 32: ni siquiera este mecanismo de pago ante autoridad escapa a la prohibición de efectivo y metales — le aplica el umbral de la fracción que corresponda al acto u operación de que se trate." },
+    hint:"Fracción VIII del artículo 32 L: ni siquiera este mecanismo de pago ante autoridad escapa a la prohibición de efectivo y metales — le aplica el umbral de la fracción que corresponda al acto u operación de que se trate." },
   { word:"DICTAMEN",     diff:"dificil",
-    hint:"Documento que resulta de la auditoría interna o externa sobre la efectividad del cumplimiento (artículo 18, fracción XI). Primer ejercicio revisable: 2028 completo. Se presenta a más tardar el último día hábil de marzo de 2029, que cae en viernes 30." },
+    hint:"Documento que resulta de la auditoría interna o externa sobre la efectividad del cumplimiento (artículo 18, fracción XI L). Primer ejercicio revisable: 2028 completo. Se presenta a más tardar el último día hábil de marzo de 2029, que cae en viernes 30." },
 ];
 
 const MAX_WRONG = 6;

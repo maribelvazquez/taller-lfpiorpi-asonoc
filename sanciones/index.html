@@ -159,6 +159,18 @@
     border-top:1px solid var(--line);
     font-size:12px; color:var(--gray); text-align:center; line-height:1.8;
   }
+
+  /* ── Nomenclatura de ordenamientos ── */
+  .ref{display:inline-block;font-size:.62em;font-weight:700;letter-spacing:.5px;
+       line-height:1;padding:2px 5px;border-radius:4px;margin-left:3px;
+       vertical-align:.28em;white-space:nowrap;font-family:Calibri,"Segoe UI",Arial,sans-serif}
+  .r-l  {background:#E3E9F7;color:#12224A}
+  .r-r  {background:#E4F2EB;color:#245C45}
+  .r-rcg{background:#FDF1DC;color:#8C570D}
+  .r-cpf{background:#F3E6F2;color:#6B2160}
+  .leyenda{background:#fff;border:1px solid #E2E7F0;border-left:5px solid #12224A;
+           border-radius:10px;padding:12px 18px;margin:18px 0;font-size:13.5px;line-height:1.8}
+  .leyenda b{color:#12224A}
 </style>
 </head>
 <body>
@@ -181,6 +193,8 @@
   <button class="tab" onclick="showTab('umb')">📋  Umbrales y efectivo</button>
 </div>
 
+<div class="leyenda" style="margin-bottom:20px"><b>Cómo leer las citas.</b> <span class="ref r-l">L</span> Ley · <span class="ref r-r">R</span> Reglamento · <span class="ref r-rcg">RCG</span> Reglas de Carácter General (ACUERDO 115/2026). En los desplegables y en el resultado la marca va como texto: «Art. 53 L».</div>
+
 <!-- ══ TAB: CALCULADORA ══════════════════════════════════════════════════════ -->
 <div id="tab-calc" class="tab-content active">
 
@@ -189,13 +203,13 @@
 
     <!-- Obligación incumplida -->
     <div class="field full">
-      <label>Obligación incumplida (Art. 18 / Art. 32)</label>
+      <label>Obligación incumplida (Art. 18<span class="ref r-l">L</span> / Art. 32<span class="ref r-l">L</span>)</label>
       <select id="selObligacion" onchange="onObligChange()">
         <option value="">— Selecciona la obligación —</option>
 
         <optgroup label="── IDENTIFICACIÓN Y EXPEDIENTE (Art. 18 Fracc. I a V) ──">
           <option value="1|id_cliente">No identifiqué ni verifiqué la identidad del cliente antes de la operación (Fracc. I)</option>
-          <option value="1|exp_incompleto">El expediente del cliente está incompleto o no se integró conforme al Art. 18</option>
+          <option value="1|exp_incompleto">El expediente del cliente está incompleto o no se integró conforme al Art. 18 L</option>
           <option value="1|sin_actividad">No solicité la actividad u ocupación al establecer una Relación de negocios (Fracc. II)</option>
           <option value="1|bc_cliente">No identifiqué al Beneficiario Controlador de mi Cliente, o no recabé la declaración de la persona física (Fracc. III)</option>
           <option value="1|no_conservo">No conservé la información durante 10 años, o no la conservé en el domicilio registrado (Fracc. IV)</option>
@@ -204,9 +218,9 @@
         </optgroup>
 
         <optgroup label="── FEDATARIOS Y SOCIEDADES MERCANTILES (Arts. 33, 33 Bis, 33 Ter) ──">
-          <option value="5|fp_instrumento">Fedatario: no identifiqué la forma de pago en el instrumento desde 8,025 UMA (Art. 33)</option>
-          <option value="5|bc_no_registro">Sociedad mercantil: no atendí el requerimiento para determinar a mi Beneficiario Controlador ni conservé el soporte (Art. 33 Bis)</option>
-          <option value="5|bc_no_actualiz">Sociedad mercantil: no registré la información del BC en el sistema de la Secretaría de Economía (Art. 33 Ter)</option>
+          <option value="5|fp_instrumento">Fedatario: no identifiqué la forma de pago en el instrumento desde 8,025 UMA (Art. 33 L)</option>
+          <option value="5|bc_no_registro">Sociedad mercantil: no atendí el requerimiento para determinar a mi Beneficiario Controlador ni conservé el soporte (Art. 33 Bis L)</option>
+          <option value="5|bc_no_actualiz">Sociedad mercantil: no registré la información del BC en el sistema de la Secretaría de Economía (Art. 33 Ter L)</option>
         </optgroup>
 
         <optgroup label="── AVISOS (Art. 18 Fracc. VI) ──">
@@ -216,7 +230,7 @@
         </optgroup>
 
         <optgroup label="── REPRESENTANTE ENCARGADA DE CUMPLIMIENTO (Art. 20) ──">
-          <option value="1|sin_representante">No designé persona Representante Encargada del Cumplimiento, o la designación no fue aceptada (Art. 20)</option>
+          <option value="9|sin_representante">No designé persona Representante Encargada del Cumplimiento, o la designación no fue aceptada (Art. 20 L)</option>
         </optgroup>
 
         <optgroup label="── OBLIGACIONES DIFERIDAS · aún no sancionables (Art. 18 Fracc. VII a XI) ──">
@@ -232,9 +246,9 @@
         </optgroup>
 
         <optgroup label="── PROHIBICIONES DE EFECTIVO (Art. 32) ──">
-          <option value="7|efectivo_viii">Recibí efectivo en venta de vehículos por encima de 3,210 UMA (Art. 32 Fracc. II)</option>
-          <option value="7|efectivo_v">Recibí efectivo en operación inmobiliaria por encima de 8,025 UMA (Art. 32 Fracc. I)</option>
-          <option value="7|efectivo_otros">Realicé operación prohibida con efectivo, metales o monedas (Art. 32)</option>
+          <option value="7|efectivo_viii">Recibí efectivo en venta de vehículos por encima de 3,210 UMA (Art. 32 Fracc. II L)</option>
+          <option value="7|efectivo_v">Recibí efectivo en operación inmobiliaria por encima de 8,025 UMA (Art. 32 Fracc. I L)</option>
+          <option value="7|efectivo_otros">Realicé operación prohibida con efectivo, metales o monedas (Art. 32 L)</option>
         </optgroup>
 
       </select>
@@ -254,21 +268,22 @@
 
     <!-- Art. 55 -->
     <div class="field full">
-      <label>¿Se regulariza espontáneamente ANTES de que la SHCP inicie verificación?</label>
+      <label>Art. 55<span class="ref r-l">L</span> — ¿cumplió de forma espontánea y previa al inicio de la verificación, Y reconoció expresamente la falta?</label>
       <div class="radio-group" id="art55Group">
         <label class="radio-opt" onclick="selectRadio('art55','no')">
           <input type="radio" name="art55" value="no">
-          <span>No — la SHCP ya detectó / proceso en curso</span>
+          <span>No — la SHCP ya inició, o falta el reconocimiento expreso</span>
         </label>
         <label class="radio-opt" onclick="selectRadio('art55','primera')">
           <input type="radio" name="art55" value="primera">
-          <span>Sí — 1ª ocasión espontánea (100% condonado)</span>
+          <span>Sí — beneficio no usado antes (abstención total, por única ocasión)</span>
         </label>
         <label class="radio-opt" onclick="selectRadio('art55','subsecuente')">
           <input type="radio" name="art55" value="subsecuente">
-          <span>Sí — 2ª ocasión o más (50% de reducción)</span>
+          <span>Sí — beneficio ya ejercido antes (reducción de HASTA 50%)</span>
         </label>
       </div>
+      <p style="font-size:12.5px;color:var(--gray);margin-top:4px">Los tres requisitos son acumulativos: espontaneidad, anterioridad al inicio de las facultades de verificación y <b>reconocimiento expreso de la falta</b> dentro del plazo inicial del procedimiento, que se formaliza conforme al art. 55 Bis del Reglamento (escrito libre ante el SAT, detalle de la totalidad de las faltas, protesta de decir verdad y soporte documental). Si falta cualquiera de los tres, no hay beneficio.</p>
     </div>
 
   </div>
@@ -294,12 +309,12 @@
         <div class="res-card-sub" id="resUmaSub"></div>
       </div>
       <div class="res-card">
-        <div class="res-card-label">Multa total sin Art. 55</div>
+        <div class="res-card-label">Multa total sin Art. 55<span class="ref r-l">L</span></div>
         <div class="res-card-main color-red" id="resPesosSinArt55"></div>
         <div class="res-card-sub" id="resPesosSinSub"></div>
       </div>
       <div class="res-card">
-        <div class="res-card-label">Multa efectiva con Art. 55</div>
+        <div class="res-card-label">Multa efectiva con Art. 55<span class="ref r-l">L</span></div>
         <div class="res-card-main color-green" id="resPesosConArt55"></div>
         <div class="res-card-sub" id="resPesosConSub"></div>
       </div>
@@ -390,7 +405,7 @@
       </tbody>
     </table>
     </div>
-    <p style="font-size:12.5px;color:var(--gray);margin-top:10px">La prohibición alcanza a las dos partes —quien paga y quien acepta el pago—, aun cuando el pago en efectivo se haga por conducto de una Entidad Financiera. Su infracción se sanciona en el nivel más alto (Art. 53 Fracc. VII · Art. 54 Fracc. III).</p>
+    <p style="font-size:12.5px;color:var(--gray);margin-top:10px">La prohibición alcanza a las dos partes —quien paga y quien acepta el pago—, aun cuando el pago en efectivo se haga por conducto de una Entidad Financiera. Su infracción se sanciona en el nivel más alto (Art. 53 Fracc. VII<span class="ref r-l">L</span> · Art. 54 Fracc. III<span class="ref r-l">L</span>).</p>
   </div>
 
   <div class="card umb-section">
@@ -398,24 +413,24 @@
     <div class="tabla-scroll">
     <table class="umb">
       <thead>
-        <tr><th>Nivel</th><th>Aplica a (Art. 53)</th><th>Mínimo UMA</th><th>Máximo UMA</th><th>Mínimo $MXN</th><th>Máximo $MXN</th></tr>
+        <tr><th>Nivel</th><th>Aplica a (Art. 53<span class="ref r-l">L</span>)</th><th>Mínimo UMA</th><th>Máximo UMA</th><th>Mínimo $MXN</th><th>Máximo $MXN</th></tr>
       </thead>
       <tbody>
         <tr>
           <td>1</td>
-          <td>Fracc. I, II, III y IV — Requerimientos de la Secretaría, incumplimiento de <b>cualquier</b> obligación del Art. 18, Avisos extemporáneos dentro de 30 días y Avisos sin los requisitos del Art. 24</td>
+          <td>Fracc. I, II, III y IV — Requerimientos de la Secretaría, incumplimiento de <b>cualquier</b> obligación del Art. 18<span class="ref r-l">L</span>, Avisos extemporáneos dentro de 30 días y Avisos sin los requisitos del Art. 24<span class="ref r-l">L</span></td>
           <td>200</td><td>2,000</td>
           <td class="pesos">$23,462.00</td><td class="pesos">$234,620.00</td>
         </tr>
         <tr>
           <td>2</td>
-          <td>Fracc. V — Arts. 33, 33 Bis y 33 Ter: forma de pago en instrumentos de fe pública y Beneficiario Controlador de las sociedades mercantiles</td>
+          <td>Fracc. V — Arts. 33, 33 Bis y 33 Ter<span class="ref r-l">L</span>: forma de pago en instrumentos de fe pública y Beneficiario Controlador de las sociedades mercantiles</td>
           <td>2,000</td><td>10,000</td>
           <td class="pesos">$234,620.00</td><td class="pesos">$1,173,100.00</td>
         </tr>
         <tr>
           <td>3</td>
-          <td>Fracc. VI y VII — <b>Omisión</b> de Avisos y operaciones prohibidas por el Art. 32</td>
+          <td>Fracc. VI y VII — <b>Omisión</b> de Avisos y operaciones prohibidas por el Art. 32<span class="ref r-l">L</span></td>
           <td>10,000</td><td>65,000</td>
           <td class="pesos">$1,173,100.00</td><td class="siempre">$7,625,150.00 ó 10–100% del valor de la operación (lo que resulte MAYOR)</td>
         </tr>
@@ -427,7 +442,7 @@
 </div><!-- /tab-umb -->
 
 <footer>
-  LFPIORPI · Ley DOF 16-07-2025 · Reglamento DOF 27-03-2026 · ACUERDO 115/2026 DOF 07-08-2026 · Arts. 17, 18, 20, 32, 33, 53 a 61 · UMA 2026 = $117.31/día (INEGI, vigente desde el 1 de febrero de 2026)<br>
+  LFPIORPI · Ley DOF 16-07-2025 · Reglamento DOF 27-03-2026 · ACUERDO 115/2026 DOF 07-08-2026 · Arts. 17, 18, 20, 32, 33, 53 a 61<span class="ref r-l">L</span> · UMA 2026 = $117.31/día (INEGI, vigente desde el 1 de febrero de 2026)<br>
   <b>GMC360 · 360Educa · ASONOC · LEXQUO</b> · Herramienta de referencia — no sustituye asesoría jurídica<br>
   Material vivo: si detectamos algún ajuste, se actualiza a la última versión en esta misma liga.
 </footer>
@@ -437,15 +452,16 @@
 <script>
 const UMA = 117.31;
 const NIVELES = {
-  1: { min:200,   max:2000,  label:'Nivel 1',  art:'Art. 53 Fracc. I–IV · Art. 54 Fracc. I' },
-  2: { min:2000,  max:10000, label:'Nivel 2',  art:'Art. 53 Fracc. V · Art. 54 Fracc. II' },
+  1: { min:200,   max:2000,  label:'Nivel 1',  art:'Art. 53 Fracc. I–IV L · Art. 54 Fracc. I L' },
+  2: { min:2000,  max:10000, label:'Nivel 2',  art:'Art. 53 Fracc. V L · Art. 54 Fracc. II L' },
   0: { min:0,     max:0,     label:'No sancionable hoy', art:'Obligación diferida · Transitorio Tercero del Decreto y transitorios del ACUERDO 115/2026' },
-  3: { min:10000, max:65000, label:'Nivel 3',  art:'Art. 53 Fracc. VI–VII · Art. 54 Fracc. III' },
-  4: { min:200,   max:2000,  label:'Nivel 1',  art:'Art. 53 Fracc. IV · Art. 54 Fracc. I' },
-  5: { min:2000,  max:10000, label:'Nivel 2',  art:'Art. 53 Fracc. V · Art. 54 Fracc. II — Arts. 33, 33 Bis y 33 Ter' },
-  6: { min:10000, max:65000, label:'Nivel 3',  art:'Art. 53 Fracc. VI · Art. 54 Fracc. III — la extemporaneidad de más de 30 días se sanciona como omisión' },
-  7: { min:10000, max:65000, label:'Nivel 3',  art:'Art. 53 Fracc. VII · Art. 54 Fracc. III' },
-  8: { min:200,   max:2000,  label:'Nivel 1',  art:'Art. 53 Fracc. III · Art. 54 Fracc. I — extemporaneidad dentro de 30 días' },
+  3: { min:10000, max:65000, label:'Nivel 3',  art:'Art. 53 Fracc. VI–VII L · Art. 54 Fracc. III L' },
+  4: { min:200,   max:2000,  label:'Nivel 1',  art:'Art. 53 Fracc. IV L · Art. 54 Fracc. I L' },
+  5: { min:2000,  max:10000, label:'Nivel 2',  art:'Art. 53 Fracc. V L · Art. 54 Fracc. II L — Arts. 33, 33 Bis y 33 Ter L' },
+  6: { min:10000, max:65000, label:'Nivel 3',  art:'Art. 53 Fracc. VI L · Art. 54 Fracc. III L — omisión, y extemporaneidad de más de 30 días' },
+  7: { min:10000, max:65000, label:'Nivel 3',  art:'Art. 53 Fracc. VII L · Art. 54 Fracc. III L' },
+  8: { min:200,   max:2000,  label:'Nivel 1',  art:'Art. 53 Fracc. III L · Art. 54 Fracc. I L — extemporaneidad dentro de 30 días' },
+  9: { min:0,     max:0,     label:'Sin multa directa', art:'Art. 20 de la Ley — no figura en el catálogo de infracciones del Art. 53 L' },
 };
 
 let art55Val = 'no';
@@ -483,9 +499,25 @@ function calcular() {
   // Obligaciones diferidas: no pueden fundar una multa hoy.
   if (nivelKey === 0) {
     alert('Esta obligación todavía no es exigible y no puede fundar una multa hoy.\n\n'
-        + 'Las fracciones VII a XI del artículo 18 se difirieron por el Transitorio Tercero del Decreto de reforma a la Ley, '
+        + 'Las fracciones VII a XI del artículo 18 L se difirieron por el Transitorio Tercero del Decreto de reforma a la Ley, '
         + 'y las Reglas las fijaron entre el 1 de marzo de 2027 y el ejercicio 2028.\n\n'
         + 'Consulta la guía para el calendario completo.');
+    return;
+  }
+
+  // Artículo 20 L: no está en el catálogo de infracciones del artículo 53 L.
+  if (nivelKey === 9) {
+    alert('El artículo 20 L no genera multa directa.\n\n'
+        + 'El catálogo de infracciones del artículo 53 L se agota en: requerimientos de la Secretaría, '
+        + 'obligaciones del artículo 18 L, Avisos, y artículos 32, 33, 33 Bis y 33 Ter L. La designación del '
+        + 'Representante está en el artículo 20 L y no aparece ahí.\n\n'
+        + 'La consecuencia real la fija el propio artículo 20 L: mientras no haya Representante o la designación '
+        + 'no sea aceptada, el cumplimiento de TODAS las obligaciones corresponde personalmente a los integrantes '
+        + 'del órgano de administración o a la persona administradora única (o a la fideicomitente o a quien '
+        + 'administre la figura jurídica).\n\n'
+        + 'Es decir: no se multa la omisión de designar, pero cada incumplimiento del artículo 18 L cometido en '
+        + 'ese periodo se imputa a quienes dirigen. Calcula esos incumplimientos por separado en esta misma '
+        + 'herramienta.');
     return;
   }
   const n         = parseInt(document.getElementById('numInfracciones').value) || 1;
@@ -507,18 +539,19 @@ function calcular() {
   let minTotal = minBase * n;
   let maxTotal = maxBase * n;
 
-  // Art. 55
+  // Art. 55 L
   let minEfectivo = minTotal;
   let maxEfectivo = maxTotal;
   let art55Msg = '';
 
   if (art55Val === 'primera') {
     minEfectivo = 0; maxEfectivo = 0;
-    art55Msg = '1ª OCASIÓN ESPONTÁNEA — Art. 55 LFPIORPI';
+    art55Msg = 'ABSTENCIÓN POR ÚNICA OCASIÓN — Art. 55 L, primer párrafo';
   } else if (art55Val === 'subsecuente') {
+    // La reducción es de HASTA 50%: el piso es discrecional, el techo es la multa completa.
     minEfectivo = minTotal * 0.5;
-    maxEfectivo = maxTotal * 0.5;
-    art55Msg = 'SUBSECUENTE ESPONTÁNEA — Art. 55 LFPIORPI';
+    maxEfectivo = maxTotal;
+    art55Msg = 'REDUCCIÓN DE HASTA 50% — Art. 55 L, segundo párrafo';
   }
 
   // Mostrar resultado
@@ -535,40 +568,52 @@ function calcular() {
   document.getElementById('resUmaSub').textContent   = 'por infracción · ' + n + (n===1?' infracción':' infracciones') + ' ingresadas';
 
   document.getElementById('resPesosSinArt55').textContent = fmt(minTotal) + ' – ' + fmt(maxTotal);
-  document.getElementById('resPesosSinSub').textContent   = 'sin Art. 55 · ' + (isN3 && valorOp > 0 ? 'incluye comparativo % op.' : 'solo UMA');
+  document.getElementById('resPesosSinSub').textContent   = 'sin Art. 55 L · ' + (isN3 && valorOp > 0 ? 'incluye comparativo % op.' : 'solo UMA');
 
   if (art55Val === 'primera') {
     document.getElementById('resPesosConArt55').textContent = '$0.00';
-    document.getElementById('resPesosConSub').textContent   = 'Abstención total — 1ª vez espontánea y previa, con reconocimiento expreso';
+    document.getElementById('resPesosConSub').textContent   = 'La Secretaría se abstiene de sancionar el total de las infracciones, por única ocasión';
   } else if (art55Val === 'subsecuente') {
     document.getElementById('resPesosConArt55').textContent = fmt(minEfectivo) + ' – ' + fmt(maxEfectivo);
-    document.getElementById('resPesosConSub').textContent   = 'Reducción de HASTA 50% — subsecuente espontánea y previa';
+    document.getElementById('resPesosConSub').textContent   = 'Reducción de HASTA 50%: el 50% es el máximo de la rebaja, no un descuento garantizado';
   } else {
     document.getElementById('resPesosConArt55').textContent = fmt(minTotal) + ' – ' + fmt(maxTotal);
-    document.getElementById('resPesosConSub').textContent   = 'Art. 55 no aplicado';
+    document.getElementById('resPesosConSub').textContent   = 'Art. 55 L no aplicado';
   }
 
-  // Nota N3
+  // Notas del resultado
   const notaEl = document.getElementById('notaN3');
+  let notas = [];
   if (isN3 && valorOp > 0) {
-    notaEl.style.display = 'block';
-    notaEl.innerHTML = '⚠️  <strong>Nivel 3:</strong> La multa es la que resulte <strong>MAYOR</strong> entre el rango en UMA ('
+    notas.push('⚠️  <strong>Nivel 3:</strong> La multa es la que resulte <strong>MAYOR</strong> entre el rango en UMA ('
       + fmt(cfg.min * UMA) + ' – ' + fmt(cfg.max * UMA) + ') y el 10%–100% del valor de la operación ('
-      + fmt(valorOp * 0.10) + ' – ' + fmt(valorOp) + '). Se aplicó el mayor de los dos.';
-  } else { notaEl.style.display = 'none'; }
+      + fmt(valorOp * 0.10) + ' – ' + fmt(valorOp) + '). Se aplicó el mayor de los dos.');
+  }
+  if (nivelKey === 6) {
+    notas.push('📌  <strong>Remisión defectuosa — dos lecturas posibles.</strong> El artículo 53, fracción III L, '
+      + 'segundo párrafo, manda aplicar «la sanción prevista para el caso de omisión en el artículo 54 L, '
+      + '<em>fracción II</em>», pero la omisión de Avisos (artículo 53, fracción VI L) se sanciona en el artículo 54 L, '
+      + '<em>fracción III</em>. La lectura <strong>teleológica</strong> lleva al Nivel 3 —' + fmt(10000*UMA) + ' – '
+      + fmt(65000*UMA) + '— que es la que muestra esta calculadora; la lectura <strong>literal</strong> lleva al '
+      + 'Nivel 2 —' + fmt(2000*UMA) + ' – ' + fmt(10000*UMA) + '— y favorece al sujeto obligado. '
+      + 'En cualquiera de las dos la conclusión operativa es la misma: presentar con treinta y un días de retraso '
+      + 'cuesta al menos diez veces más que presentarlo con veintinueve.');
+  }
+  if (notas.length) { notaEl.style.display = 'block'; notaEl.innerHTML = notas.join('<br><br>'); }
+  else { notaEl.style.display = 'none'; }
 
-  // Art. 55 box
+  // Art. 55 L box
   const art55Title = document.getElementById('art55Title');
   const art55Text  = document.getElementById('art55Text');
   if (art55Val === 'primera') {
     art55Title.textContent = art55Msg;
-    art55Text.textContent  = 'Al regularizarse espontáneamente antes de que la SHCP inicie verificación, la primera ocasión da derecho a condonación total de la multa. La infracción debe subsanarse completamente.';
+    art55Text.innerHTML    = 'No es una condonación: la Secretaría <b>se abstiene de sancionar</b> el total de las infracciones, y sólo <b>por única ocasión</b>. Exige tres cosas de forma acumulativa: cumplir de manera <b>espontánea</b>, hacerlo <b>previamente al inicio de las facultades de verificación</b>, y <b>reconocer expresamente la falta</b> dentro del plazo inicial del procedimiento, en los términos del artículo 55 Bis del Reglamento. Consumida esta vez, ya no vuelve a haber abstención.';
   } else if (art55Val === 'subsecuente') {
     art55Title.textContent = art55Msg;
-    art55Text.textContent  = 'Para la segunda ocasión o subsecuentes, el Art. 55 permite una reducción del 50% sobre la multa calculada, siempre que la regularización sea espontánea y previa al inicio de la verificación.';
+    art55Text.innerHTML    = 'Ejercido ya el beneficio de abstención, el segundo párrafo del artículo 55 L permite reducir <b>hasta en un cincuenta por ciento</b> —no automáticamente el cincuenta— el monto de las multas que se regularicen de manera espontánea y previa, con el mismo requisito de reconocimiento expreso. Por eso el rango va del 50% de la multa mínima hasta la multa completa: el porcentaje de rebaja lo determina la autoridad.';
   } else {
-    art55Title.textContent = 'Sin beneficio Art. 55';
-    art55Text.textContent  = 'La SHCP ya inició el proceso de verificación o se optó por no regularizarse espontáneamente. Se aplica el monto completo calculado.';
+    art55Title.textContent = 'Sin beneficio del Art. 55 L';
+    art55Text.innerHTML    = 'Falta alguno de los tres requisitos —espontaneidad, anterioridad al inicio de las facultades de verificación o reconocimiento expreso de la falta—. Se aplica el monto completo calculado. Todo depende de una palabra: <b>previa</b>; la ventana se cierra en el instante en que llega el oficio.';
   }
 
   res.classList.add('visible');
